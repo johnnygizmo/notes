@@ -1,1 +1,1 @@
-xcopy .\build\web .\app
+xcopy /E .\build\web .\app
