@@ -1,1 +1,1 @@
-flutter build web --wasm --base-href=/app/ 
+flutter build web --wasm --base-href=/notes/app/ 
