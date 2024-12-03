@@ -4,7 +4,7 @@ import 'package:music_notes/music_notes.dart';
 import 'package:notes/classes/scale_state.dart';
 import 'package:riverpod/riverpod.dart';
 
-enum GuessType { scale, chord }
+enum GuessType { scale, chord, interval }
 
 class ScaleProviderNotifier extends StateNotifier<ScaleState> {
   ScaleProviderNotifier()
@@ -18,8 +18,23 @@ class ScaleProviderNotifier extends StateNotifier<ScaleState> {
     state = state.copyWith(chord: chord);
   }
 
+  void setInterval(Interval i, Note start) {
+    state = state.copyWith(interval: i, startNote: start);
+  }
+
   void guess(String note) {
-    if (state.guessType == GuessType.scale) {
+    if (state.guessType == GuessType.interval) {
+      if (state.guesses.length > 0) {
+        return;
+      }
+
+      Note n = Note.parse(note);
+      if (n.isEnharmonicWith(state.startNote!.transposeBy(state.interval!))) {
+        state = state.copyWith(message: "Correct", guesses: [n], guess: 1);
+      } else {
+        state = state.copyWith(message: "Incorrect");
+      }
+    } else if (state.guessType == GuessType.scale) {
       Note n = Note.parse(note);
       if (state.guess > state.scale!.degrees.length) {
         return;
@@ -31,13 +46,12 @@ class ScaleProviderNotifier extends StateNotifier<ScaleState> {
             guesses: [...state.guesses, n],
             message: "$n is Correct");
         if (state.guess == state.scale!.degrees.length) {
-          state = state.copyWith(
-            message: "Scale Completed");
+          state = state.copyWith(message: "Scale Completed");
         }
       } else {
         state = state.copyWith(message: "$n is incorrect");
       }
-    } else if(state.guessType == GuessType.chord) {
+    } else if (state.guessType == GuessType.chord) {
       Note n = Note.parse(note);
       if (state.guess > state.chord!.items.length) {
         return;
@@ -49,19 +63,19 @@ class ScaleProviderNotifier extends StateNotifier<ScaleState> {
             guesses: [...state.guesses, n],
             message: "$n is Correct");
         if (state.guess == state.chord!.items.length) {
-          state = state.copyWith(
-            message: "Chord Completed");
+          state = state.copyWith(message: "Chord Completed");
         }
       } else {
         state = state.copyWith(message: "$n is incorrect");
       }
-    } 
+    }
   }
 
   reset(GuessType type) {
     state = state.copyWith(guess: 0, guesses: [], message: "", guessType: type);
     nextChord();
     nextScale();
+    nextInterval();
   }
 
   nextChord({bool major = true, bool minor = false}) {
@@ -76,11 +90,18 @@ class ScaleProviderNotifier extends StateNotifier<ScaleState> {
     if (types[scale] == "major") {
       setChord(ChordPattern.majorTriad
           .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
-      
     } else if (types[scale] == "minor") {
       setChord(ChordPattern.minorTriad
           .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
     }
+  }
+
+  nextInterval() {
+    Random r = Random();
+    state = state.copyWith(guess: 0, guesses: [], message: "");
+    Note start = Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)));
+    Interval i = Interval.fromSemitones(r.nextInt(12));
+    setInterval(i, start);
   }
 
   nextScale({bool major = true, bool minor = false}) {

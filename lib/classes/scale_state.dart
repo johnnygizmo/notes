@@ -9,6 +9,8 @@ class ScaleState with _$ScaleState {
   const factory ScaleState({
     Scale<Note>? scale,
     Chord<Note>? chord,
+    Interval? interval,
+    Note? startNote,
     @Default(<Note>[]) List<Note> guesses,
     @Default(0) int guess,
     @Default("") String message,
