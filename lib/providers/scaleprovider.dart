@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:music_notes/music_notes.dart';
 import 'package:notes/classes/scale_state.dart';
 import 'package:notes/providers/shared_preferences_provider.dart';
-import 'package:riverpod/riverpod.dart';
 
 enum GuessType { scale, chord, interval }
 
@@ -41,7 +40,6 @@ String? eventToGuess(value) {
   return null;
 }
 
-
 class ScaleProviderNotifier extends StateNotifier<ScaleState> {
   ScaleProviderNotifier()
       : super(ScaleState(scale: ScalePattern.major.on(Note.c)));
@@ -60,7 +58,7 @@ class ScaleProviderNotifier extends StateNotifier<ScaleState> {
 
   void guess(String note, WidgetRef ref) async {
     if (state.guessType == GuessType.interval) {
-      if (state.guesses.length > 0) {
+      if (state.guesses.isNotEmpty) {
         return;
       }
 
@@ -84,20 +82,16 @@ class ScaleProviderNotifier extends StateNotifier<ScaleState> {
         if (state.guess == state.scale!.degrees.length) {
           state = state.copyWith(
               message: "Scale Completed", currentRun: state.currentRun + 1);
-          
+
           var shp = ref.read(sharedPreferencesProvider);
 
-          shp.whenData((data){
-            if(data.getInt("bestScale") == null) {
-              data.setInt("bestScale", state.currentRun );
-            } else if(state.currentRun + 1 > data.getInt("bestScale") ?? 0 ) {
-              data.setInt("bestScale", state.currentRun );
+          shp.whenData((data) {
+            if (data.getInt("bestScale") == null) {
+              data.setInt("bestScale", state.currentRun);
+            } else if (state.currentRun + 1 > data.getInt("bestScale") ?? 0) {
+              data.setInt("bestScale", state.currentRun);
             }
           });
-
-
-
-
         }
       } else {
         state = state.copyWith(message: "$n is incorrect", currentRun: -1);

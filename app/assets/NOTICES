@@ -4522,6 +4522,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 build_daemon
 characters
+ffi
 package_config
 
 Copyright 2019, the Dart project authors. 
@@ -7638,6 +7639,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --------------------------------------------------------------------------------
 flutter_lints
+path_provider_linux
+path_provider_platform_interface
+path_provider_windows
+plugin_platform_interface
+shared_preferences
+shared_preferences_android
+shared_preferences_foundation
+shared_preferences_linux
+shared_preferences_platform_interface
+shared_preferences_web
+shared_preferences_windows
+xdg_directories
 
 Copyright 2013 The Flutter Authors. All rights reserved.
 
@@ -29372,6 +29385,7 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 json_annotation
 json_serializable
+platform
 
 Copyright 2017, the Dart project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without

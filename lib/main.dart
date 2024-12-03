@@ -40,7 +40,8 @@ class MainApp extends ConsumerWidget {
                           MaterialPageRoute(
                               builder: (context) => const ScaleSpeller()));
                     },
-                    child: const Text("Major Scales")),
+                    child: const Text("Major Scales",
+                        style: TextStyle(fontSize: 32))),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -52,7 +53,8 @@ class MainApp extends ConsumerWidget {
                           MaterialPageRoute(
                               builder: (context) => const ChordSpeller()));
                     },
-                    child: const Text("Major Chords")),
+                    child: const Text("Major Chords",
+                        style: TextStyle(fontSize: 32))),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -66,7 +68,8 @@ class MainApp extends ConsumerWidget {
                           MaterialPageRoute(
                               builder: (context) => const IntervalSpeller()));
                     },
-                    child: const Text("Intervals")),
+                    child: const Text("Intervals",
+                        style: TextStyle(fontSize: 32))),
               ),
             ],
           ),

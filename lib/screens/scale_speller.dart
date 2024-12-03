@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notes/providers/shared_preferences_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class ScaleSpeller extends ConsumerStatefulWidget {
   const ScaleSpeller({super.key});
 
@@ -15,7 +14,6 @@ class ScaleSpeller extends ConsumerStatefulWidget {
 }
 
 class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
-  String mod = "";
   var node = FocusNode();
 
   @override
@@ -46,6 +44,10 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
         autofocus: true,
         focusNode: node,
         onKeyEvent: (value) {
+          if (value.logicalKey == LogicalKeyboardKey.space) {
+            ref.read(scaleProvider.notifier).nextScale();
+          }
+
           String? guess = eventToGuess(value);
           if (guess != null) {
             ref.read(scaleProvider.notifier).guess(guess, ref);
@@ -59,13 +61,11 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
               Text(
                   'Spell Scale: ${sp.scale?.degrees[0]}${sp.scale!.pattern.name}',
                   style: const TextStyle(fontSize: 26)),
-              ElevatedButton(
-                  onPressed: () {
-                    ref.read(scaleProvider.notifier).nextScale();
-                  },
-                  child: const Text('Skip')),
               Text(sp.message, style: const TextStyle(fontSize: 24)),
-              Text(sp.guesses.toString(), style: const TextStyle(fontSize: 22)),
+              sp.guesses.isEmpty
+                  ? const Text("Entries: [ ]")
+                  : Text("Entries: ${sp.guesses}",
+                      style: const TextStyle(fontSize: 22)),
               sp.guess > sp.scale!.length
                   ? ElevatedButton(
                       onPressed: () {
@@ -76,7 +76,12 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
               sp.currentRun <= 0
                   ? Container()
                   : Text("Current Streak ${sp.currentRun}"),
-              Text("Best Streak: $best")
+              Text("Best Streak: $best"),
+              ElevatedButton(
+                  onPressed: () {
+                    ref.read(scaleProvider.notifier).nextScale();
+                  },
+                  child: const Text('Skip')),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:notes/classes/chromatic_widget.dart';
 import 'package:notes/providers/scaleprovider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,39 +21,66 @@ Map<String, String> intervals = {
   'P8': 'Octave'
 };
 
-class IntervalSpeller extends ConsumerWidget {
+class IntervalSpeller extends ConsumerStatefulWidget {
   const IntervalSpeller({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<IntervalSpeller> createState() => _IntervalSpellerState();
+}
+
+class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
+  var node = FocusNode();
+
+  @override
+  Widget build(BuildContext context) {
     var sp = ref.watch(scaleProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Interval Speller'),
         backgroundColor: Colors.grey[300],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('${intervals[sp.interval.toString()]} from ${sp.startNote}',
-                style: const TextStyle(fontSize: 26)),
-            ElevatedButton(
-                onPressed: () {
-                  ref.read(scaleProvider.notifier).nextInterval();
-                },
-                child: const Text('Skip')),
-            Text(sp.message, style: const TextStyle(fontSize: 24)),
-            Text(sp.guesses.toString(), style: const TextStyle(fontSize: 22)),
-            sp.guess >= 1
-                ? ElevatedButton(
-                    onPressed: () {
-                      ref.read(scaleProvider.notifier).nextInterval();
-                    },
-                    child: const Text("Next Interval"))
-                : const ChromaticWidget()
-          ],
+      body: KeyboardListener(
+        autofocus: true,
+        focusNode: node,
+        onKeyEvent: (value) {
+          if (value.logicalKey == LogicalKeyboardKey.space) {
+            ref.read(scaleProvider.notifier).nextInterval();
+          }
+          String? guess = eventToGuess(value);
+          if (guess != null) {
+            ref.read(scaleProvider.notifier).guess(guess, ref);
+          }
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                  'Interval: ${intervals[sp.interval.toString()]} up from ${sp.startNote}',
+                  style: const TextStyle(fontSize: 26)),
+
+              Text(sp.message, style: const TextStyle(fontSize: 24)),
+
+              sp.guesses.isEmpty
+                  ? const Text("Entries: [ ]")
+                  : Text("Entries: ${sp.guesses}"),
+
+              //  Text(sp.guesses.toString(), style: const TextStyle(fontSize: 22)),
+              sp.guess >= 1
+                  ? ElevatedButton(
+                      onPressed: () {
+                        ref.read(scaleProvider.notifier).nextInterval();
+                      },
+                      child: const Text("Next Interval"))
+                  : const ChromaticWidget(),
+              ElevatedButton(
+                  onPressed: () {
+                    ref.read(scaleProvider.notifier).nextInterval();
+                  },
+                  child: const Text('Skip')),
+            ],
+          ),
         ),
       ),
     );
