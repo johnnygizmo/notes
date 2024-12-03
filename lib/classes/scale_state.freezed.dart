@@ -20,6 +20,10 @@ mixin _$ScaleState {
   Chord<Note>? get chord => throw _privateConstructorUsedError;
   Interval? get interval => throw _privateConstructorUsedError;
   Note? get startNote => throw _privateConstructorUsedError;
+  dynamic get currentRun => throw _privateConstructorUsedError;
+  dynamic get chordStreak => throw _privateConstructorUsedError;
+  dynamic get scaleStreak => throw _privateConstructorUsedError;
+  dynamic get intervalStreak => throw _privateConstructorUsedError;
   List<Note> get guesses => throw _privateConstructorUsedError;
   int get guess => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
@@ -43,6 +47,10 @@ abstract class $ScaleStateCopyWith<$Res> {
       Chord<Note>? chord,
       Interval? interval,
       Note? startNote,
+      dynamic currentRun,
+      dynamic chordStreak,
+      dynamic scaleStreak,
+      dynamic intervalStreak,
       List<Note> guesses,
       int guess,
       String message,
@@ -68,6 +76,10 @@ class _$ScaleStateCopyWithImpl<$Res, $Val extends ScaleState>
     Object? chord = freezed,
     Object? interval = freezed,
     Object? startNote = freezed,
+    Object? currentRun = freezed,
+    Object? chordStreak = freezed,
+    Object? scaleStreak = freezed,
+    Object? intervalStreak = freezed,
     Object? guesses = null,
     Object? guess = null,
     Object? message = null,
@@ -90,6 +102,22 @@ class _$ScaleStateCopyWithImpl<$Res, $Val extends ScaleState>
           ? _value.startNote
           : startNote // ignore: cast_nullable_to_non_nullable
               as Note?,
+      currentRun: freezed == currentRun
+          ? _value.currentRun
+          : currentRun // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      chordStreak: freezed == chordStreak
+          ? _value.chordStreak
+          : chordStreak // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      scaleStreak: freezed == scaleStreak
+          ? _value.scaleStreak
+          : scaleStreak // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      intervalStreak: freezed == intervalStreak
+          ? _value.intervalStreak
+          : intervalStreak // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       guesses: null == guesses
           ? _value.guesses
           : guesses // ignore: cast_nullable_to_non_nullable
@@ -123,6 +151,10 @@ abstract class _$$ScaleStateImplCopyWith<$Res>
       Chord<Note>? chord,
       Interval? interval,
       Note? startNote,
+      dynamic currentRun,
+      dynamic chordStreak,
+      dynamic scaleStreak,
+      dynamic intervalStreak,
       List<Note> guesses,
       int guess,
       String message,
@@ -146,6 +178,10 @@ class __$$ScaleStateImplCopyWithImpl<$Res>
     Object? chord = freezed,
     Object? interval = freezed,
     Object? startNote = freezed,
+    Object? currentRun = freezed,
+    Object? chordStreak = freezed,
+    Object? scaleStreak = freezed,
+    Object? intervalStreak = freezed,
     Object? guesses = null,
     Object? guess = null,
     Object? message = null,
@@ -168,6 +204,11 @@ class __$$ScaleStateImplCopyWithImpl<$Res>
           ? _value.startNote
           : startNote // ignore: cast_nullable_to_non_nullable
               as Note?,
+      currentRun: freezed == currentRun ? _value.currentRun! : currentRun,
+      chordStreak: freezed == chordStreak ? _value.chordStreak! : chordStreak,
+      scaleStreak: freezed == scaleStreak ? _value.scaleStreak! : scaleStreak,
+      intervalStreak:
+          freezed == intervalStreak ? _value.intervalStreak! : intervalStreak,
       guesses: null == guesses
           ? _value._guesses
           : guesses // ignore: cast_nullable_to_non_nullable
@@ -196,6 +237,10 @@ class _$ScaleStateImpl implements _ScaleState {
       this.chord,
       this.interval,
       this.startNote,
+      this.currentRun = 0,
+      this.chordStreak = 0,
+      this.scaleStreak = 0,
+      this.intervalStreak = 0,
       final List<Note> guesses = const <Note>[],
       this.guess = 0,
       this.message = "",
@@ -210,6 +255,18 @@ class _$ScaleStateImpl implements _ScaleState {
   final Interval? interval;
   @override
   final Note? startNote;
+  @override
+  @JsonKey()
+  final dynamic currentRun;
+  @override
+  @JsonKey()
+  final dynamic chordStreak;
+  @override
+  @JsonKey()
+  final dynamic scaleStreak;
+  @override
+  @JsonKey()
+  final dynamic intervalStreak;
   final List<Note> _guesses;
   @override
   @JsonKey()
@@ -231,7 +288,7 @@ class _$ScaleStateImpl implements _ScaleState {
 
   @override
   String toString() {
-    return 'ScaleState(scale: $scale, chord: $chord, interval: $interval, startNote: $startNote, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType)';
+    return 'ScaleState(scale: $scale, chord: $chord, interval: $interval, startNote: $startNote, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType)';
   }
 
   @override
@@ -245,6 +302,14 @@ class _$ScaleStateImpl implements _ScaleState {
                 other.interval == interval) &&
             (identical(other.startNote, startNote) ||
                 other.startNote == startNote) &&
+            const DeepCollectionEquality()
+                .equals(other.currentRun, currentRun) &&
+            const DeepCollectionEquality()
+                .equals(other.chordStreak, chordStreak) &&
+            const DeepCollectionEquality()
+                .equals(other.scaleStreak, scaleStreak) &&
+            const DeepCollectionEquality()
+                .equals(other.intervalStreak, intervalStreak) &&
             const DeepCollectionEquality().equals(other._guesses, _guesses) &&
             (identical(other.guess, guess) || other.guess == guess) &&
             (identical(other.message, message) || other.message == message) &&
@@ -259,6 +324,10 @@ class _$ScaleStateImpl implements _ScaleState {
       chord,
       interval,
       startNote,
+      const DeepCollectionEquality().hash(currentRun),
+      const DeepCollectionEquality().hash(chordStreak),
+      const DeepCollectionEquality().hash(scaleStreak),
+      const DeepCollectionEquality().hash(intervalStreak),
       const DeepCollectionEquality().hash(_guesses),
       guess,
       message,
@@ -279,6 +348,10 @@ abstract class _ScaleState implements ScaleState {
       final Chord<Note>? chord,
       final Interval? interval,
       final Note? startNote,
+      final dynamic currentRun,
+      final dynamic chordStreak,
+      final dynamic scaleStreak,
+      final dynamic intervalStreak,
       final List<Note> guesses,
       final int guess,
       final String message,
@@ -292,6 +365,14 @@ abstract class _ScaleState implements ScaleState {
   Interval? get interval;
   @override
   Note? get startNote;
+  @override
+  dynamic get currentRun;
+  @override
+  dynamic get chordStreak;
+  @override
+  dynamic get scaleStreak;
+  @override
+  dynamic get intervalStreak;
   @override
   List<Note> get guesses;
   @override

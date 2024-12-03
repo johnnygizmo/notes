@@ -15,6 +15,7 @@ dependencies:
   json_annotation: ^4.9.0
   music_notes: ^0.19.1
   riverpod: ^2.6.1
+  shared_preferences: ^2.3.3
 
 dev_dependencies:
   flutter_test:

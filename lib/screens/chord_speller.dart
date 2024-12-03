@@ -12,26 +12,33 @@ class ChordSpeller extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chord Speller'),
-         backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.grey[300],
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-             Text('Spell Chord ${sp.chord?.root} ${sp.chord?.pattern.abbreviation}', style: const TextStyle(fontSize: 26)),
-            ElevatedButton(onPressed: (){
-              ref.read(scaleProvider.notifier).nextChord();
-            }, child: const Text('Skip')),
+            Text(
+                'Spell Chord ${sp.chord?.root} ${sp.chord?.pattern.abbreviation}',
+                style: const TextStyle(fontSize: 26)),
+            ElevatedButton(
+                onPressed: () {
+                  ref.read(scaleProvider.notifier).nextChord();
+                },
+                child: const Text('Skip')),
             Text(sp.message, style: const TextStyle(fontSize: 24)),
             Text(sp.guesses.toString(), style: const TextStyle(fontSize: 22)),
-            
-            sp.guess >= sp.chord!.items.length ? ElevatedButton(onPressed: (){
-              ref.read(scaleProvider.notifier).nextChord();
-            }, child: const Text("Next Chord")) : 
-            const ChromaticWidget()
+            sp.guess >= sp.chord!.items.length
+                ? ElevatedButton(
+                    onPressed: () {
+                      ref.read(scaleProvider.notifier).nextChord();
+                    },
+                    child: const Text("Next Chord"))
+                : const ChromaticWidget()
           ],
         ),
       ),
     );
   }
 }
-

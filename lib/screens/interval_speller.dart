@@ -33,6 +33,8 @@ class IntervalSpeller extends ConsumerWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('${intervals[sp.interval.toString()]} from ${sp.startNote}',
                 style: const TextStyle(fontSize: 26)),

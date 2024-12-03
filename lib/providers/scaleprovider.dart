@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:music_notes/music_notes.dart';
 import 'package:notes/classes/scale_state.dart';
+import 'package:notes/providers/shared_preferences_provider.dart';
 import 'package:riverpod/riverpod.dart';
 
 enum GuessType { scale, chord, interval }
@@ -46,10 +47,11 @@ class ScaleProviderNotifier extends StateNotifier<ScaleState> {
             guesses: [...state.guesses, n],
             message: "$n is Correct");
         if (state.guess == state.scale!.degrees.length) {
-          state = state.copyWith(message: "Scale Completed");
+          state = state.copyWith(
+              message: "Scale Completed", currentRun: state.currentRun + 1);
         }
       } else {
-        state = state.copyWith(message: "$n is incorrect");
+        state = state.copyWith(message: "$n is incorrect", currentRun: -1);
       }
     } else if (state.guessType == GuessType.chord) {
       Note n = Note.parse(note);
