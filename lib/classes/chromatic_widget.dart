@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:notes/providers/scaleprovider.dart';
+import 'package:notes/providers/settings_provider.dart';
 
 class ChromaticWidget extends ConsumerWidget {
   const ChromaticWidget({
@@ -18,19 +18,19 @@ class ChromaticWidget extends ConsumerWidget {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    ref.read(scaleProvider.notifier).guess("A", ref);
+                    ref.read(settingsProvider.notifier).guess("A", ref);
                   },
                   child: const Text("A")),
               Column(
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("A#", ref);
+                        ref.read(settingsProvider.notifier).guess("A#", ref);
                       },
                       child: const Text("A♯")),
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("Bb", ref);
+                        ref.read(settingsProvider.notifier).guess("Bb", ref);
                       },
                       child: const Text("Bb")),
                 ],
@@ -39,7 +39,7 @@ class ChromaticWidget extends ConsumerWidget {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("B", ref);
+                        ref.read(settingsProvider.notifier).guess("B", ref);
                       },
                       child: const Text("B")),
                   ElevatedButton(
@@ -47,7 +47,7 @@ class ChromaticWidget extends ConsumerWidget {
                           backgroundColor:
                               WidgetStateProperty.all(Colors.grey[300])),
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("Cb", ref);
+                        ref.read(settingsProvider.notifier).guess("Cb", ref);
                       },
                       child: const Text("Cb")),
                 ],
@@ -60,13 +60,13 @@ class ChromaticWidget extends ConsumerWidget {
                         backgroundColor:
                             WidgetStateProperty.all(Colors.grey[300])),
                     onPressed: () {
-                      ref.read(scaleProvider.notifier).guess("B#", ref);
+                      ref.read(settingsProvider.notifier).guess("B#", ref);
                     },
                     child: const Text("B#"),
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("C", ref);
+                        ref.read(settingsProvider.notifier).guess("C", ref);
                       },
                       child: const Text("C")),
                 ],
@@ -75,31 +75,31 @@ class ChromaticWidget extends ConsumerWidget {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("C#", ref);
+                        ref.read(settingsProvider.notifier).guess("C#", ref);
                       },
                       child: const Text("C♯")),
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("Db", ref);
+                        ref.read(settingsProvider.notifier).guess("Db", ref);
                       },
                       child: const Text("Db")),
                 ],
               ),
               ElevatedButton(
                   onPressed: () {
-                    ref.read(scaleProvider.notifier).guess("D", ref);
+                    ref.read(settingsProvider.notifier).guess("D", ref);
                   },
                   child: const Text("D")),
               Column(
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("D#", ref);
+                        ref.read(settingsProvider.notifier).guess("D#", ref);
                       },
                       child: const Text("D♯")),
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("Eb", ref);
+                        ref.read(settingsProvider.notifier).guess("Eb", ref);
                       },
                       child: const Text("Eb")),
                 ],
@@ -108,7 +108,7 @@ class ChromaticWidget extends ConsumerWidget {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("E", ref);
+                        ref.read(settingsProvider.notifier).guess("E", ref);
                       },
                       child: const Text("E")),
                   ElevatedButton(
@@ -116,7 +116,7 @@ class ChromaticWidget extends ConsumerWidget {
                           backgroundColor:
                               WidgetStateProperty.all(Colors.grey[300])),
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("Fb", ref);
+                        ref.read(settingsProvider.notifier).guess("Fb", ref);
                       },
                       child: const Text("Fb")),
                 ],
@@ -128,12 +128,12 @@ class ChromaticWidget extends ConsumerWidget {
                           backgroundColor:
                               WidgetStateProperty.all(Colors.grey[300])),
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("E#", ref);
+                        ref.read(settingsProvider.notifier).guess("E#", ref);
                       },
                       child: const Text("E♯")),
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("F", ref);
+                        ref.read(settingsProvider.notifier).guess("F", ref);
                       },
                       child: const Text("F")),
                 ],
@@ -142,31 +142,31 @@ class ChromaticWidget extends ConsumerWidget {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("F#", ref);
+                        ref.read(settingsProvider.notifier).guess("F#", ref);
                       },
                       child: const Text("F♯")),
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("Gb", ref);
+                        ref.read(settingsProvider.notifier).guess("Gb", ref);
                       },
                       child: const Text("Gb")),
                 ],
               ),
               ElevatedButton(
                   onPressed: () {
-                    ref.read(scaleProvider.notifier).guess("G", ref);
+                    ref.read(settingsProvider.notifier).guess("G", ref);
                   },
                   child: const Text("G")),
               Column(
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("G#", ref);
+                        ref.read(settingsProvider.notifier).guess("G#", ref);
                       },
                       child: const Text("G♯")),
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).guess("Ab", ref);
+                        ref.read(settingsProvider.notifier).guess("Ab", ref);
                       },
                       child: const Text("Ab")),
                 ],

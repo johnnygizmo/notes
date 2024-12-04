@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:music_notes/music_notes.dart';
-import 'package:notes/classes/scale_state.dart';
+import 'package:notes/classes/settings_state.dart';
 import 'package:notes/providers/shared_preferences_provider.dart';
 
 enum GuessType { scale, chord, interval }
@@ -40,9 +40,21 @@ String? eventToGuess(value) {
   return null;
 }
 
-class ScaleProviderNotifier extends StateNotifier<ScaleState> {
-  ScaleProviderNotifier()
-      : super(ScaleState(scale: ScalePattern.major.on(Note.c)));
+const List<(ScalePattern, String)> scaleOptions = <(ScalePattern, String)>[
+  (ScalePattern.ionian, "Major"),
+  (ScalePattern.dorian, "Dorian"),
+  (ScalePattern.phrygian, "Phrygian"),
+  (ScalePattern.lydian, "Lydian"),
+  (ScalePattern.mixolydian, "Mixolydian"),
+  (ScalePattern.aeolian, "Minor"),
+  (ScalePattern.locrian, "Locrian"),
+  (ScalePattern.minorPentatonic, "Minor Pent."),
+  (ScalePattern.majorPentatonic, "Major Pent."),
+];
+
+class SettingsProviderNotifier extends StateNotifier<SettingsState> {
+  SettingsProviderNotifier()
+      : super(SettingsState(scale: ScalePattern.major.on(Note.c)));
 
   void setScale(Scale<Note> scale) {
     state = state.copyWith(scale: scale);
@@ -150,25 +162,22 @@ class ScaleProviderNotifier extends StateNotifier<ScaleState> {
   }
 
   nextScale({bool major = true, bool minor = false}) {
-    List<String> types = [];
-    if (major) types.add("major");
-    if (minor) types.add("minor");
-
     Random r = Random();
     state = state.copyWith(guess: 0, guesses: [], message: "");
 
-    int scale = r.nextInt(types.length);
-    if (types[scale] == "major") {
-      setScale(ScalePattern.major
-          .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
-    } else if (types[scale] == "minor") {
-      setScale(ScalePattern.naturalMinor
-          .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
+    if (state.selectedScales.isEmpty) {
+      state = state.copyWith(selectedScales: {ScalePattern.major});
     }
+
+    ScalePattern scaleType =
+        state.selectedScales.elementAt(r.nextInt(state.selectedScales.length));
+
+    setScale(scaleType
+        .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
   }
 }
 
-final scaleProvider =
-    StateNotifierProvider<ScaleProviderNotifier, ScaleState>((ref) {
-  return ScaleProviderNotifier();
+final settingsProvider =
+    StateNotifierProvider<SettingsProviderNotifier, SettingsState>((ref) {
+  return SettingsProviderNotifier();
 });

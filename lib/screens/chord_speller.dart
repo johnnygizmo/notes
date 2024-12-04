@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notes/classes/chromatic_widget.dart';
-import 'package:notes/providers/scaleprovider.dart';
+import 'package:notes/providers/settings_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChordSpeller extends ConsumerStatefulWidget {
@@ -13,9 +13,10 @@ class ChordSpeller extends ConsumerStatefulWidget {
 
 class _ChordSpellerState extends ConsumerState<ChordSpeller> {
   var node = FocusNode();
+
   @override
   Widget build(BuildContext context) {
-    var sp = ref.watch(scaleProvider);
+    var sp = ref.watch(settingsProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chord Speller'),
@@ -26,11 +27,11 @@ class _ChordSpellerState extends ConsumerState<ChordSpeller> {
         focusNode: node,
         onKeyEvent: (value) {
           if (value.logicalKey == LogicalKeyboardKey.space) {
-            ref.read(scaleProvider.notifier).nextChord();
+            ref.read(settingsProvider.notifier).nextChord();
           }
           String? guess = eventToGuess(value);
           if (guess != null) {
-            ref.read(scaleProvider.notifier).guess(guess, ref);
+            ref.read(settingsProvider.notifier).guess(guess, ref);
           }
         },
         child: Center(
@@ -48,13 +49,13 @@ class _ChordSpellerState extends ConsumerState<ChordSpeller> {
               sp.guess >= sp.chord!.items.length
                   ? ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).nextChord();
+                        ref.read(settingsProvider.notifier).nextChord();
                       },
                       child: const Text("Next Chord"))
                   : const ChromaticWidget(),
               ElevatedButton(
                   onPressed: () {
-                    ref.read(scaleProvider.notifier).nextChord();
+                    ref.read(settingsProvider.notifier).nextChord();
                   },
                   child: const Text('Skip')),
             ],

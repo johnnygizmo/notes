@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:notes/providers/scaleprovider.dart';
+import 'package:notes/providers/settings_provider.dart';
 import 'package:notes/screens/chord_speller.dart';
 import 'package:notes/screens/interval_speller.dart';
 import 'package:notes/screens/scale_speller.dart';
@@ -34,26 +34,15 @@ class MainApp extends ConsumerWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                     onPressed: () {
-                      ref.read(scaleProvider.notifier).reset(GuessType.scale);
+                      ref
+                          .read(settingsProvider.notifier)
+                          .reset(GuessType.scale);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const ScaleSpeller()));
                     },
-                    child: const Text("Major Scales",
-                        style: TextStyle(fontSize: 32))),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                    onPressed: () {
-                      ref.read(scaleProvider.notifier).reset(GuessType.chord);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChordSpeller()));
-                    },
-                    child: const Text("Major Chords",
+                    child: const Text("Scale Spelling",
                         style: TextStyle(fontSize: 32))),
               ),
               Padding(
@@ -61,14 +50,29 @@ class MainApp extends ConsumerWidget {
                 child: ElevatedButton(
                     onPressed: () {
                       ref
-                          .read(scaleProvider.notifier)
+                          .read(settingsProvider.notifier)
+                          .reset(GuessType.chord);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ChordSpeller()));
+                    },
+                    child: const Text("Major Chords Spelling",
+                        style: TextStyle(fontSize: 32))),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                    onPressed: () {
+                      ref
+                          .read(settingsProvider.notifier)
                           .reset(GuessType.interval);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const IntervalSpeller()));
                     },
-                    child: const Text("Intervals",
+                    child: const Text("Interval Spelling",
                         style: TextStyle(fontSize: 32))),
               ),
             ],

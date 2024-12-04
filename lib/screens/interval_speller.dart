@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notes/classes/chromatic_widget.dart';
-import 'package:notes/providers/scaleprovider.dart';
+import 'package:notes/providers/settings_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Map<String, String> intervals = {
@@ -33,7 +33,7 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
 
   @override
   Widget build(BuildContext context) {
-    var sp = ref.watch(scaleProvider);
+    var sp = ref.watch(settingsProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Interval Speller'),
@@ -44,11 +44,11 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
         focusNode: node,
         onKeyEvent: (value) {
           if (value.logicalKey == LogicalKeyboardKey.space) {
-            ref.read(scaleProvider.notifier).nextInterval();
+            ref.read(settingsProvider.notifier).nextInterval();
           }
           String? guess = eventToGuess(value);
           if (guess != null) {
-            ref.read(scaleProvider.notifier).guess(guess, ref);
+            ref.read(settingsProvider.notifier).guess(guess, ref);
           }
         },
         child: Center(
@@ -70,13 +70,13 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
               sp.guess >= 1
                   ? ElevatedButton(
                       onPressed: () {
-                        ref.read(scaleProvider.notifier).nextInterval();
+                        ref.read(settingsProvider.notifier).nextInterval();
                       },
                       child: const Text("Next Interval"))
                   : const ChromaticWidget(),
               ElevatedButton(
                   onPressed: () {
-                    ref.read(scaleProvider.notifier).nextInterval();
+                    ref.read(settingsProvider.notifier).nextInterval();
                   },
                   child: const Text('Skip')),
             ],
