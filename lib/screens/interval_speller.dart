@@ -37,7 +37,7 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Interval Speller'),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.deepOrange,
       ),
       body: SingleChildScrollView(
         child: KeyboardListener(
@@ -57,6 +57,9 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                   const SizedBox(
+                  height: 25,
+                ),
                 Text(
                     'Interval: ${intervals[sp.interval.toString()]} up from ${sp.startNote}',
                     style: const TextStyle(fontSize: 26)),

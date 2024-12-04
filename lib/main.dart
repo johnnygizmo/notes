@@ -22,7 +22,7 @@ class MainApp extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Music Notes'),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.deepOrange,
       ),
       body: SingleChildScrollView(
         child: Container(

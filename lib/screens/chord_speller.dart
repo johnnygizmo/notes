@@ -22,7 +22,7 @@ class _ChordSpellerState extends ConsumerState<ChordSpeller> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chord Speller'),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.deepOrange,
       ),
       body: SingleChildScrollView(
         
@@ -43,6 +43,9 @@ class _ChordSpellerState extends ConsumerState<ChordSpeller> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(
+                  height: 25,
+                ),
                 SegmentedButton<ChordPattern>(
                     multiSelectionEnabled: true,
                     onSelectionChanged: (p0) {

@@ -42,7 +42,7 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scale Speller'),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.deepOrange,
       ),
       body: SingleChildScrollView(
         child: KeyboardListener(
@@ -63,6 +63,9 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                   const SizedBox(
+                  height: 25,
+                ),
                 SegmentedButton<ScalePattern>(
                     multiSelectionEnabled: true,
                     onSelectionChanged: (p0) {
