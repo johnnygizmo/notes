@@ -39,52 +39,54 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
         title: const Text('Interval Speller'),
         backgroundColor: Colors.grey[300],
       ),
-      body: KeyboardListener(
-        autofocus: true,
-        focusNode: node,
-        onKeyEvent: (value) {
-          if (value.logicalKey == LogicalKeyboardKey.space) {
-            ref.read(settingsProvider.notifier).nextInterval();
-          }
-          String? guess = eventToGuess(value);
-          if (guess != null) {
-            ref.read(settingsProvider.notifier).guess(guess, ref);
-          }
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                  'Interval: ${intervals[sp.interval.toString()]} up from ${sp.startNote}',
-                  style: const TextStyle(fontSize: 26)),
-
-              Text(sp.message, style: const TextStyle(fontSize: 24)),
-
-              sp.guesses.isEmpty
-                  ? const Text("Entries: [ ]")
-                  : Text("Entries: ${sp.guesses}"),
-              const SizedBox(
-                height: 25,
-              ),
-              //  Text(sp.guesses.toString(), style: const TextStyle(fontSize: 22)),
-              sp.guess >= 1
-                  ? ElevatedButton(
-                      onPressed: () {
-                        ref.read(settingsProvider.notifier).nextInterval();
-                      },
-                      child: const Text("Next Interval"))
-                  : const ChromaticWidget(),
-              const SizedBox(
-                height: 25,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    ref.read(settingsProvider.notifier).nextInterval();
-                  },
-                  child: const Text('Skip')),
-            ],
+      body: SingleChildScrollView(
+        child: KeyboardListener(
+          autofocus: true,
+          focusNode: node,
+          onKeyEvent: (value) {
+            if (value.logicalKey == LogicalKeyboardKey.space) {
+              ref.read(settingsProvider.notifier).nextInterval();
+            }
+            String? guess = eventToGuess(value);
+            if (guess != null) {
+              ref.read(settingsProvider.notifier).guess(guess, ref);
+            }
+          },
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                    'Interval: ${intervals[sp.interval.toString()]} up from ${sp.startNote}',
+                    style: const TextStyle(fontSize: 26)),
+        
+                Text(sp.message, style: const TextStyle(fontSize: 24)),
+        
+                sp.guesses.isEmpty
+                    ? const Text("Entries: [ ]")
+                    : Text("Entries: ${sp.guesses}"),
+                const SizedBox(
+                  height: 25,
+                ),
+                //  Text(sp.guesses.toString(), style: const TextStyle(fontSize: 22)),
+                sp.guess >= 1
+                    ? ElevatedButton(
+                        onPressed: () {
+                          ref.read(settingsProvider.notifier).nextInterval();
+                        },
+                        child: const Text("Next Interval"))
+                    : const ChromaticWidget(),
+                const SizedBox(
+                  height: 25,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(settingsProvider.notifier).nextInterval();
+                    },
+                    child: const Text('Skip')),
+              ],
+            ),
           ),
         ),
       ),

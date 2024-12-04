@@ -44,79 +44,81 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
         title: const Text('Scale Speller'),
         backgroundColor: Colors.grey[300],
       ),
-      body: KeyboardListener(
-        autofocus: true,
-        focusNode: node,
-        onKeyEvent: (value) {
-          if (value.logicalKey == LogicalKeyboardKey.space) {
-            ref.read(settingsProvider.notifier).nextScale();
-          }
-
-          String? guess = eventToGuess(value);
-          if (guess != null) {
-            ref.read(settingsProvider.notifier).guess(guess, ref);
-          }
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SegmentedButton<ScalePattern>(
-                  multiSelectionEnabled: true,
-                  onSelectionChanged: (p0) {
-                    ref.read(settingsProvider.notifier).state =
-                        sp.copyWith(selectedScales: p0);
-                  },
-                  segments: (scaleOptions
-                      .map(((ScalePattern, String) scale) =>
-                          ButtonSegment<ScalePattern>(
-                              value: scale.$1,
-                              label: Text(
-                                softWrap: true,
-                                maxLines: 3,
-                                scale.$2,
-                                style: const TextStyle(fontSize: 10),
-                              )))
-                      .toList()),
-                  selected: sp.selectedScales),
-              const SizedBox(
-                height: 25,
-              ),
-              Text(
-                  'Spell Scale: ${sp.scale?.degrees[0]} ${sp.scale!.pattern.name}',
-                  style: const TextStyle(fontSize: 26)),
-              Text(sp.message, style: const TextStyle(fontSize: 24)),
-              sp.guesses.isEmpty
-                  ? const Text("Entries: [ ]")
-                  : Text("Entries: ${sp.guesses}",
-                      style: const TextStyle(fontSize: 22)),
-              const SizedBox(
-                height: 25,
-              ),
-              sp.guess > sp.scale!.length
-                  ? ElevatedButton(
-                      onPressed: () {
-                        ref.read(settingsProvider.notifier).nextScale();
-                      },
-                      child: const Text("Next Scale"))
-                  : const ChromaticWidget(),
-              sp.currentRun <= 0
-                  ? Container()
-                  : Text("Current Streak ${sp.currentRun}"),
-              const SizedBox(
-                height: 25,
-              ),
-              Text("Best Streak: $best"),
-              const SizedBox(
-                height: 25,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    ref.read(settingsProvider.notifier).nextScale();
-                  },
-                  child: const Text('Skip')),
-            ],
+      body: SingleChildScrollView(
+        child: KeyboardListener(
+          autofocus: true,
+          focusNode: node,
+          onKeyEvent: (value) {
+            if (value.logicalKey == LogicalKeyboardKey.space) {
+              ref.read(settingsProvider.notifier).nextScale();
+            }
+        
+            String? guess = eventToGuess(value);
+            if (guess != null) {
+              ref.read(settingsProvider.notifier).guess(guess, ref);
+            }
+          },
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SegmentedButton<ScalePattern>(
+                    multiSelectionEnabled: true,
+                    onSelectionChanged: (p0) {
+                      ref.read(settingsProvider.notifier).state =
+                          sp.copyWith(selectedScales: p0);
+                    },
+                    segments: (scaleOptions
+                        .map(((ScalePattern, String) scale) =>
+                            ButtonSegment<ScalePattern>(
+                                value: scale.$1,
+                                label: Text(
+                                  softWrap: true,
+                                  maxLines: 3,
+                                  scale.$2,
+                                  style: const TextStyle(fontSize: 10),
+                                )))
+                        .toList()),
+                    selected: sp.selectedScales),
+                const SizedBox(
+                  height: 25,
+                ),
+                Text(
+                    'Spell Scale: ${sp.scale?.degrees[0]} ${sp.scale!.pattern.name}',
+                    style: const TextStyle(fontSize: 26)),
+                Text(sp.message, style: const TextStyle(fontSize: 24)),
+                sp.guesses.isEmpty
+                    ? const Text("Entries: [ ]")
+                    : Text("Entries: ${sp.guesses}",
+                        style: const TextStyle(fontSize: 22)),
+                const SizedBox(
+                  height: 25,
+                ),
+                sp.guess > sp.scale!.length
+                    ? ElevatedButton(
+                        onPressed: () {
+                          ref.read(settingsProvider.notifier).nextScale();
+                        },
+                        child: const Text("Next Scale"))
+                    : const ChromaticWidget(),
+                sp.currentRun <= 0
+                    ? Container()
+                    : Text("Current Streak ${sp.currentRun}"),
+                const SizedBox(
+                  height: 25,
+                ),
+                Text("Best Streak: $best"),
+                const SizedBox(
+                  height: 25,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(settingsProvider.notifier).nextScale();
+                    },
+                    child: const Text('Skip')),
+              ],
+            ),
           ),
         ),
       ),
