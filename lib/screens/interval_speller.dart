@@ -65,7 +65,9 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
               sp.guesses.isEmpty
                   ? const Text("Entries: [ ]")
                   : Text("Entries: ${sp.guesses}"),
-
+              const SizedBox(
+                height: 25,
+              ),
               //  Text(sp.guesses.toString(), style: const TextStyle(fontSize: 22)),
               sp.guess >= 1
                   ? ElevatedButton(
@@ -74,6 +76,9 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
                       },
                       child: const Text("Next Interval"))
                   : const ChromaticWidget(),
+              const SizedBox(
+                height: 25,
+              ),
               ElevatedButton(
                   onPressed: () {
                     ref.read(settingsProvider.notifier).nextInterval();

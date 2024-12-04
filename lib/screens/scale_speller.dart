@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:music_notes/music_notes.dart';
@@ -77,10 +76,13 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
                                 softWrap: true,
                                 maxLines: 3,
                                 scale.$2,
-                                style: TextStyle(fontSize: 10),
+                                style: const TextStyle(fontSize: 10),
                               )))
                       .toList()),
                   selected: sp.selectedScales),
+              const SizedBox(
+                height: 25,
+              ),
               Text(
                   'Spell Scale: ${sp.scale?.degrees[0]} ${sp.scale!.pattern.name}',
                   style: const TextStyle(fontSize: 26)),
@@ -89,6 +91,9 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
                   ? const Text("Entries: [ ]")
                   : Text("Entries: ${sp.guesses}",
                       style: const TextStyle(fontSize: 22)),
+              const SizedBox(
+                height: 25,
+              ),
               sp.guess > sp.scale!.length
                   ? ElevatedButton(
                       onPressed: () {
@@ -99,7 +104,13 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
               sp.currentRun <= 0
                   ? Container()
                   : Text("Current Streak ${sp.currentRun}"),
+              const SizedBox(
+                height: 25,
+              ),
               Text("Best Streak: $best"),
+              const SizedBox(
+                height: 25,
+              ),
               ElevatedButton(
                   onPressed: () {
                     ref.read(settingsProvider.notifier).nextScale();

@@ -19,6 +19,7 @@ class SettingsState with _$SettingsState {
           @Default(0) int guess,
           @Default("") String message,
           @Default(GuessType.scale) GuessType guessType,
+          @Default(<ChordPattern>{}) Set<ChordPattern> selectedChords,
           @Default(<ScalePattern>{}) Set<ScalePattern> selectedScales}) =
       _SettingsState;
 }

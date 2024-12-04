@@ -57,7 +57,7 @@ class MainApp extends ConsumerWidget {
                           MaterialPageRoute(
                               builder: (context) => const ChordSpeller()));
                     },
-                    child: const Text("Major Chords Spelling",
+                    child: const Text("Chord Spelling",
                         style: TextStyle(fontSize: 32))),
               ),
               Padding(

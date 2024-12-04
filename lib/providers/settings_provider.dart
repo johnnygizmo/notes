@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:music_notes/music_notes.dart';
 import 'package:notes/classes/settings_state.dart';
 import 'package:notes/providers/shared_preferences_provider.dart';
+import 'package:music_notes/music_notes.dart' as mn;
 
 enum GuessType { scale, chord, interval }
 
@@ -51,6 +52,61 @@ const List<(ScalePattern, String)> scaleOptions = <(ScalePattern, String)>[
   (ScalePattern.minorPentatonic, "Minor Pent."),
   (ScalePattern.majorPentatonic, "Major Pent."),
 ];
+
+List<(ChordPattern, String)> chordOptions = <(ChordPattern, String)>[
+  (ChordPattern.majorTriad, "Major"),
+  (ChordPattern.majorTriad.add7(ImperfectQuality.major), "maj7"),
+  (ChordPattern.majorTriad.add7(ImperfectQuality.minor), "7"),
+  (ChordPattern.minorTriad, "Minor"),
+  (ChordPattern.minorTriad.add7(ImperfectQuality.minor), "min7"),
+  (ChordPattern.diminishedTriad, "dim"),
+  (ChordPattern.diminishedTriad.add7(ImperfectQuality.minor), "∅7"),
+  (ChordPattern.diminishedTriad.add7(ImperfectQuality.diminished), "dim7"),
+  (ChordPattern.augmentedTriad, "+"),
+  (ChordPattern.augmentedTriad.add7(ImperfectQuality.minor), "+7"),
+];
+
+String chordPatternToType(ChordPattern p) {
+  if (p.isMajor) {
+    if (p.modifiers.isEmpty) {
+      return "maj";
+    }
+    if (p.modifiers[0] == mn.Interval.m7) {
+      return "7";
+    }
+    if (p.modifiers[0] == mn.Interval.M7) {
+      return "maj7";
+    }
+  } else if (p.isMinor) {
+    if (p.modifiers.isEmpty) {
+      return "min";
+    }
+    if (p.modifiers[0] == mn.Interval.m7) {
+      return "min7";
+    }
+    if (p.modifiers[0] == mn.Interval.M7) {
+      return "min-maj7";
+    }
+  } else if (p.isDiminished) {
+    if (p.modifiers.isEmpty) {
+      return "dim";
+    }
+    if (p.modifiers[0] == mn.Interval.m7) {
+      return "∅7";
+    }
+    if (p.modifiers[0] == mn.Interval.d7) {
+      return "dim7";
+    }
+  } else if (p.isAugmented) {
+    if (p.modifiers.isEmpty) {
+      return "aug";
+    }
+    if (p.modifiers[0] == mn.Interval.m7) {
+      return "+7";
+    }
+  }
+  return "";
+}
 
 class SettingsProviderNotifier extends StateNotifier<SettingsState> {
   SettingsProviderNotifier()
@@ -136,21 +192,16 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
   }
 
   nextChord({bool major = true, bool minor = false}) {
-    List<String> types = [];
-    if (major) types.add("major");
-    if (minor) types.add("minor");
-
     Random r = Random();
     state = state.copyWith(guess: 0, guesses: [], message: "");
-
-    int scale = r.nextInt(types.length);
-    if (types[scale] == "major") {
-      setChord(ChordPattern.majorTriad
-          .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
-    } else if (types[scale] == "minor") {
-      setChord(ChordPattern.minorTriad
-          .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
+    if (state.selectedChords.isEmpty) {
+      state = state.copyWith(selectedChords: {ChordPattern.majorTriad});
     }
+    var chordType =
+        state.selectedChords.elementAt(r.nextInt(state.selectedChords.length));
+
+    setChord(chordType
+        .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
   }
 
   nextInterval() {

@@ -10,6 +10,7 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter:
     sdk: flutter
+  flutter_grid_button: ^2.1.0
   flutter_riverpod: ^2.6.1
   freezed: ^2.5.7
   freezed_annotation: ^2.4.4
