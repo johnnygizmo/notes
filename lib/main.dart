@@ -5,6 +5,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:notes/providers/settings_provider.dart';
 import 'package:notes/screens/chord_speller.dart';
 import 'package:notes/screens/interval_speller.dart';
+import 'package:notes/screens/key_speller.dart';
 import 'package:notes/screens/scale_speller.dart';
 import 'package:url_launcher/url_launcher.dart';
 // import 'package:material_symbols_icons/symbols_map.dart';
@@ -66,6 +67,21 @@ class MainApp extends ConsumerWidget {
                         child: const Text("Scale Spelling",
                             style: TextStyle(fontSize: 32))),
                   ),
+                   Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          ref
+                              .read(settingsProvider.notifier)
+                              .reset(GuessType.keySignature);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const KeySpeller()));
+                        },
+                        child: const Text("Key Spelling",
+                            style: TextStyle(fontSize: 32))),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
@@ -98,7 +114,7 @@ class MainApp extends ConsumerWidget {
                             style: TextStyle(fontSize: 32))),
                   ),
                   const SizedBox(
-                    height: 35,
+                    height: 45,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),

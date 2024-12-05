@@ -5,8 +5,15 @@ import 'package:notes/providers/settings_provider.dart';
 
 class ChromaticWidget extends ConsumerWidget {
   const ChromaticWidget({
+    this.sharps = true,
+     this.naturals = true,
+     this.flats = true,
     super.key,
   });
+
+  final bool sharps;
+ final bool naturals;
+final  bool flats;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,169 +21,7 @@ class ChromaticWidget extends ConsumerWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     ElevatedButton(
-          //         onPressed: () {
-          //           ref.read(settingsProvider.notifier).guess("A", ref);
-          //         },
-          //         child: const Text("A")),
-          //     Column(
-          //       children: [
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("A$sharp", ref);
-          //             },
-          //             child: const Text("A♯")),
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("B$flat", ref);
-          //             },
-          //             child: const Text("B$flat")),
-          //       ],
-          //     ),
-          //     Column(
-          //       children: [
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("$flat", ref);
-          //             },
-          //             child: const Text("$flat")),
-          //         ElevatedButton(
-          //             style: ButtonStyle(
-          //                 backgroundColor:
-          //                     WidgetStateProperty.all(Colors.grey[300])),
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("C$flat", ref);
-          //             },
-          //             child: const Text("C$flat")),
-          //       ],
-          //     ),
-          //     Column(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         ElevatedButton(
-          //           style: ButtonStyle(
-          //               backgroundColor:
-          //                   WidgetStateProperty.all(Colors.grey[300])),
-          //           onPressed: () {
-          //             ref.read(settingsProvider.notifier).guess("B$sharp", ref);
-          //           },
-          //           child: const Text("B$sharp"),
-          //         ),
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("C", ref);
-          //             },
-          //             child: const Text("C")),
-          //       ],
-          //     ),
-          //     Column(
-          //       children: [
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("C$sharp", ref);
-          //             },
-          //             child: const Text("C♯")),
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("D$flat", ref);
-          //             },
-          //             child: const Text("D$flat")),
-          //       ],
-          //     ),
-          //     ElevatedButton(
-          //         onPressed: () {
-          //           ref.read(settingsProvider.notifier).guess("D", ref);
-          //         },
-          //         child: const Text("D")),
-          //     Column(
-          //       children: [
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("D$sharp", ref);
-          //             },
-          //             child: const Text("D♯")),
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("E$flat", ref);
-          //             },
-          //             child: const Text("E$flat")),
-          //       ],
-          //     ),
-          //     Column(
-          //       children: [
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("E", ref);
-          //             },
-          //             child: const Text("E")),
-          //         ElevatedButton(
-          //             style: ButtonStyle(
-          //                 backgroundColor:
-          //                     WidgetStateProperty.all(Colors.grey[300])),
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("F$flat", ref);
-          //             },
-          //             child: const Text("F$flat")),
-          //       ],
-          //     ),
-          //     Column(
-          //       children: [
-          //         ElevatedButton(
-          //             style: ButtonStyle(
-          //                 backgroundColor:
-          //                     WidgetStateProperty.all(Colors.grey[300])),
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("E$sharp", ref);
-          //             },
-          //             child: const Text("E♯")),
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("F", ref);
-          //             },
-          //             child: const Text("F")),
-          //       ],
-          //     ),
-          //     Column(
-          //       children: [
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("F$sharp", ref);
-          //             },
-          //             child: const Text("F♯")),
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("G$flat", ref);
-          //             },
-          //             child: const Text("G$flat")),
-          //       ],
-          //     ),
-          //     ElevatedButton(
-          //         onPressed: () {
-          //           ref.read(settingsProvider.notifier).guess("G", ref);
-          //         },
-          //         child: const Text("G")),
-          //     Column(
-          //       children: [
-          //         SizedBox(
-          //           width: 40,
-          //           child: ElevatedButton(
-          //               onPressed: () {
-          //                 ref.read(settingsProvider.notifier).guess("G$sharp", ref);
-          //               },
-          //               child: const Text("G♯")),
-          //         ),
-          //         ElevatedButton(
-          //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("A$flat", ref);
-          //             },
-          //             child: const Text("A$flat")),
-          //       ],
-          //     ),
-          //   ],
-          // ),
+          
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -190,6 +35,7 @@ class ChromaticWidget extends ConsumerWidget {
             height: 100,
             child: GridButton(
               items: [
+                if(sharps)
                 [
                   const GridButtonItem(title: "A$sharp"),
                   GridButtonItem(
@@ -209,7 +55,7 @@ class ChromaticWidget extends ConsumerWidget {
                   const GridButtonItem(title: "F$sharp"),
                   const GridButtonItem(title: "G$sharp"),
                 ],
-                const [
+               if( naturals ) const [
                   GridButtonItem(title: "A"),
                   GridButtonItem(title: "B"),
                   GridButtonItem(title: "C"),
@@ -218,7 +64,7 @@ class ChromaticWidget extends ConsumerWidget {
                   GridButtonItem(title: "F"),
                   GridButtonItem(title: "G"),
                 ],
-                [
+                if(flats) [
                   const GridButtonItem(title: "A$flat"),
                   const GridButtonItem(title: "B$flat"),
                   GridButtonItem(

@@ -7,7 +7,7 @@ import 'package:notes/classes/settings_state.dart';
 import 'package:notes/providers/shared_preferences_provider.dart';
 import 'package:music_notes/music_notes.dart' as mn;
 
-enum GuessType { scale, chord, interval }
+enum GuessType { scale, chord, interval, keySignature }
 
 String? eventToGuess(value) {
   String mod = "";
@@ -51,6 +51,11 @@ const List<(ScalePattern, String)> scaleOptions = <(ScalePattern, String)>[
   (ScalePattern.locrian, "Locrian"),
   (ScalePattern.minorPentatonic, "Minor Pent."),
   (ScalePattern.majorPentatonic, "Major Pent."),
+];
+
+const List<(TonalMode, String)> keyOptions = <(TonalMode, String)>[
+  (TonalMode.major, "Major"),
+  (TonalMode.minor, "Minor"),
 ];
 
 const flat = "\u266D";
@@ -128,7 +133,74 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
     state = state.copyWith(interval: i, startNote: start);
   }
 
+  void setKey(Key key) {
+    state = state.copyWith(key: key);
+  }
+
+  void guessKey(int num, String acc, WidgetRef ref) {
+    bool correct = false;
+
+    if (num == 0 && state.key!.signature.notes.length == 0) {
+      correct = true;
+    }
+    if (num > 0 && state.key!.signature.notes.length > 0) {
+      if ((state.key!.signature.notes[0].accidental.isSharp && acc == "s") ||
+          (state.key!.signature.notes[0].accidental.isFlat && acc == "f")) {
+        if (num == state.key!.signature.notes.length) {
+          correct = true;
+        }
+      }
+    }
+
+    if (correct) {
+      if (num == 0) {
+        state = state.copyWith(
+            guesses: state.key!.signature.notes,
+            guess: state.key!.signature.notes.length,
+            message: "No Sharps or Flats is Correct");
+      } else {
+        state = state.copyWith(
+            guesses: state.key!.signature.notes,
+            guess: state.key!.signature.notes.length,
+            message:
+                "$num ${acc == "s" ? num == 1 ? "sharp" : "sharps" : num == 1 ? "flat" : "flats"} is Correct");
+      }
+    } else {
+      state = state.copyWith(message: "Try Again");
+    }
+  }
+
   void guess(String note, WidgetRef ref) async {
+    if (state.guessType == GuessType.keySignature) {
+      Note n = Note.parse(note);
+      if (state.guess >= state.key!.signature.notes.length) {
+        return;
+      }
+
+      if (state.key!.signature.notes[state.guess] == n) {
+        state = state.copyWith(
+            guess: state.guess + 1,
+            guesses: [...state.guesses, n],
+            message: "$n is Correct");
+        if (state.guess == state.key!.signature.notes.length) {
+          state = state.copyWith(
+              message: "Key Completed", currentRun: state.currentRun + 1);
+
+          // var shp = ref.read(sharedPreferencesProvider);
+
+          // shp.whenData((data) {
+          //   if (data.getInt("bestScale") == null) {
+          //     data.setInt("bestScale", state.currentRun);
+          //   } else if (state.currentRun + 1 > data.getInt("bestScale") ?? 0) {
+          //     data.setInt("bestScale", state.currentRun);
+          //   }
+          // });
+        }
+      } else {
+        state = state.copyWith(message: "$n is incorrect", currentRun: -1);
+      }
+    }
+
     if (state.guessType == GuessType.interval) {
       if (state.guesses.isNotEmpty) {
         return;
@@ -193,6 +265,7 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
     nextChord();
     nextScale();
     nextInterval();
+    nextKey();
   }
 
   nextChord({bool major = true, bool minor = false}) {
@@ -229,6 +302,22 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
 
     setScale(scaleType
         .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
+  }
+
+  nextKey() {
+    Random r = Random();
+    state = state.copyWith(guess: 0, guesses: [], message: "");
+
+    if (state.selectedKeys.isEmpty) {
+      state = state.copyWith(selectedKeys: {TonalMode.major});
+    }
+
+    TonalMode mode =
+        state.selectedKeys.elementAt(r.nextInt(state.selectedKeys.length));
+
+    Note k = Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)));
+
+    setKey(Key(k, mode));
   }
 
   void toggleHelp() {

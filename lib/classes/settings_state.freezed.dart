@@ -19,6 +19,7 @@ mixin _$SettingsState {
   Scale<Note>? get scale => throw _privateConstructorUsedError;
   Chord<Note>? get chord => throw _privateConstructorUsedError;
   Interval? get interval => throw _privateConstructorUsedError;
+  Key? get key => throw _privateConstructorUsedError;
   Note? get startNote => throw _privateConstructorUsedError;
   dynamic get currentRun => throw _privateConstructorUsedError;
   dynamic get chordStreak => throw _privateConstructorUsedError;
@@ -31,6 +32,7 @@ mixin _$SettingsState {
   bool get scaleHelp => throw _privateConstructorUsedError;
   Set<ChordPattern> get selectedChords => throw _privateConstructorUsedError;
   Set<ScalePattern> get selectedScales => throw _privateConstructorUsedError;
+  Set<TonalMode> get selectedKeys => throw _privateConstructorUsedError;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -49,6 +51,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       {Scale<Note>? scale,
       Chord<Note>? chord,
       Interval? interval,
+      Key? key,
       Note? startNote,
       dynamic currentRun,
       dynamic chordStreak,
@@ -60,7 +63,8 @@ abstract class $SettingsStateCopyWith<$Res> {
       GuessType guessType,
       bool scaleHelp,
       Set<ChordPattern> selectedChords,
-      Set<ScalePattern> selectedScales});
+      Set<ScalePattern> selectedScales,
+      Set<TonalMode> selectedKeys});
 }
 
 /// @nodoc
@@ -81,6 +85,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? scale = freezed,
     Object? chord = freezed,
     Object? interval = freezed,
+    Object? key = freezed,
     Object? startNote = freezed,
     Object? currentRun = freezed,
     Object? chordStreak = freezed,
@@ -93,6 +98,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? scaleHelp = null,
     Object? selectedChords = null,
     Object? selectedScales = null,
+    Object? selectedKeys = null,
   }) {
     return _then(_value.copyWith(
       scale: freezed == scale
@@ -107,6 +113,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.interval
           : interval // ignore: cast_nullable_to_non_nullable
               as Interval?,
+      key: freezed == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as Key?,
       startNote: freezed == startNote
           ? _value.startNote
           : startNote // ignore: cast_nullable_to_non_nullable
@@ -155,6 +165,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.selectedScales
           : selectedScales // ignore: cast_nullable_to_non_nullable
               as Set<ScalePattern>,
+      selectedKeys: null == selectedKeys
+          ? _value.selectedKeys
+          : selectedKeys // ignore: cast_nullable_to_non_nullable
+              as Set<TonalMode>,
     ) as $Val);
   }
 }
@@ -171,6 +185,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       {Scale<Note>? scale,
       Chord<Note>? chord,
       Interval? interval,
+      Key? key,
       Note? startNote,
       dynamic currentRun,
       dynamic chordStreak,
@@ -182,7 +197,8 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       GuessType guessType,
       bool scaleHelp,
       Set<ChordPattern> selectedChords,
-      Set<ScalePattern> selectedScales});
+      Set<ScalePattern> selectedScales,
+      Set<TonalMode> selectedKeys});
 }
 
 /// @nodoc
@@ -201,6 +217,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? scale = freezed,
     Object? chord = freezed,
     Object? interval = freezed,
+    Object? key = freezed,
     Object? startNote = freezed,
     Object? currentRun = freezed,
     Object? chordStreak = freezed,
@@ -213,6 +230,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? scaleHelp = null,
     Object? selectedChords = null,
     Object? selectedScales = null,
+    Object? selectedKeys = null,
   }) {
     return _then(_$SettingsStateImpl(
       scale: freezed == scale
@@ -227,6 +245,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.interval
           : interval // ignore: cast_nullable_to_non_nullable
               as Interval?,
+      key: freezed == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as Key?,
       startNote: freezed == startNote
           ? _value.startNote
           : startNote // ignore: cast_nullable_to_non_nullable
@@ -264,6 +286,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value._selectedScales
           : selectedScales // ignore: cast_nullable_to_non_nullable
               as Set<ScalePattern>,
+      selectedKeys: null == selectedKeys
+          ? _value._selectedKeys
+          : selectedKeys // ignore: cast_nullable_to_non_nullable
+              as Set<TonalMode>,
     ));
   }
 }
@@ -275,6 +301,7 @@ class _$SettingsStateImpl implements _SettingsState {
       {this.scale,
       this.chord,
       this.interval,
+      this.key,
       this.startNote,
       this.currentRun = 0,
       this.chordStreak = 0,
@@ -286,10 +313,12 @@ class _$SettingsStateImpl implements _SettingsState {
       this.guessType = GuessType.scale,
       this.scaleHelp = false,
       final Set<ChordPattern> selectedChords = const <ChordPattern>{},
-      final Set<ScalePattern> selectedScales = const <ScalePattern>{}})
+      final Set<ScalePattern> selectedScales = const <ScalePattern>{},
+      final Set<TonalMode> selectedKeys = const <TonalMode>{}})
       : _guesses = guesses,
         _selectedChords = selectedChords,
-        _selectedScales = selectedScales;
+        _selectedScales = selectedScales,
+        _selectedKeys = selectedKeys;
 
   @override
   final Scale<Note>? scale;
@@ -297,6 +326,8 @@ class _$SettingsStateImpl implements _SettingsState {
   final Chord<Note>? chord;
   @override
   final Interval? interval;
+  @override
+  final Key? key;
   @override
   final Note? startNote;
   @override
@@ -350,9 +381,18 @@ class _$SettingsStateImpl implements _SettingsState {
     return EqualUnmodifiableSetView(_selectedScales);
   }
 
+  final Set<TonalMode> _selectedKeys;
+  @override
+  @JsonKey()
+  Set<TonalMode> get selectedKeys {
+    if (_selectedKeys is EqualUnmodifiableSetView) return _selectedKeys;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_selectedKeys);
+  }
+
   @override
   String toString() {
-    return 'SettingsState(scale: $scale, chord: $chord, interval: $interval, startNote: $startNote, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType, scaleHelp: $scaleHelp, selectedChords: $selectedChords, selectedScales: $selectedScales)';
+    return 'SettingsState(scale: $scale, chord: $chord, interval: $interval, key: $key, startNote: $startNote, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType, scaleHelp: $scaleHelp, selectedChords: $selectedChords, selectedScales: $selectedScales, selectedKeys: $selectedKeys)';
   }
 
   @override
@@ -364,6 +404,7 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.chord, chord) || other.chord == chord) &&
             (identical(other.interval, interval) ||
                 other.interval == interval) &&
+            (identical(other.key, key) || other.key == key) &&
             (identical(other.startNote, startNote) ||
                 other.startNote == startNote) &&
             const DeepCollectionEquality()
@@ -384,7 +425,9 @@ class _$SettingsStateImpl implements _SettingsState {
             const DeepCollectionEquality()
                 .equals(other._selectedChords, _selectedChords) &&
             const DeepCollectionEquality()
-                .equals(other._selectedScales, _selectedScales));
+                .equals(other._selectedScales, _selectedScales) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedKeys, _selectedKeys));
   }
 
   @override
@@ -393,6 +436,7 @@ class _$SettingsStateImpl implements _SettingsState {
       scale,
       chord,
       interval,
+      key,
       startNote,
       const DeepCollectionEquality().hash(currentRun),
       const DeepCollectionEquality().hash(chordStreak),
@@ -404,7 +448,8 @@ class _$SettingsStateImpl implements _SettingsState {
       guessType,
       scaleHelp,
       const DeepCollectionEquality().hash(_selectedChords),
-      const DeepCollectionEquality().hash(_selectedScales));
+      const DeepCollectionEquality().hash(_selectedScales),
+      const DeepCollectionEquality().hash(_selectedKeys));
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -420,6 +465,7 @@ abstract class _SettingsState implements SettingsState {
       {final Scale<Note>? scale,
       final Chord<Note>? chord,
       final Interval? interval,
+      final Key? key,
       final Note? startNote,
       final dynamic currentRun,
       final dynamic chordStreak,
@@ -431,7 +477,8 @@ abstract class _SettingsState implements SettingsState {
       final GuessType guessType,
       final bool scaleHelp,
       final Set<ChordPattern> selectedChords,
-      final Set<ScalePattern> selectedScales}) = _$SettingsStateImpl;
+      final Set<ScalePattern> selectedScales,
+      final Set<TonalMode> selectedKeys}) = _$SettingsStateImpl;
 
   @override
   Scale<Note>? get scale;
@@ -439,6 +486,8 @@ abstract class _SettingsState implements SettingsState {
   Chord<Note>? get chord;
   @override
   Interval? get interval;
+  @override
+  Key? get key;
   @override
   Note? get startNote;
   @override
@@ -463,6 +512,8 @@ abstract class _SettingsState implements SettingsState {
   Set<ChordPattern> get selectedChords;
   @override
   Set<ScalePattern> get selectedScales;
+  @override
+  Set<TonalMode> get selectedKeys;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

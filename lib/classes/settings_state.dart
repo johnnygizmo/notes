@@ -10,6 +10,7 @@ class SettingsState with _$SettingsState {
           {Scale<Note>? scale,
           Chord<Note>? chord,
           Interval? interval,
+          Key? key,
           Note? startNote,
           @Default(0) currentRun,
           @Default(0) chordStreak,
@@ -21,6 +22,10 @@ class SettingsState with _$SettingsState {
           @Default(GuessType.scale) GuessType guessType,
           @Default(false) bool scaleHelp,
           @Default(<ChordPattern>{}) Set<ChordPattern> selectedChords,
-          @Default(<ScalePattern>{}) Set<ScalePattern> selectedScales}) =
+          @Default(<ScalePattern>{}) Set<ScalePattern> selectedScales,
+          @Default(<TonalMode>{}) Set<TonalMode> selectedKeys,
+          
+          
+          }) =
       _SettingsState;
 }
