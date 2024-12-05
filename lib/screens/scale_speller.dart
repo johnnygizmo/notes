@@ -144,7 +144,7 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Text("Scale Variation from Major"),
+                            const Text("Scale Variation from Major"),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: scaleHelpers[sp.scale?.pattern]!
@@ -152,7 +152,7 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
                                             e,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold),
                                           ),

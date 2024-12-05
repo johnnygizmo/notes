@@ -7,8 +7,8 @@ import 'package:notes/screens/chord_speller.dart';
 import 'package:notes/screens/interval_speller.dart';
 import 'package:notes/screens/scale_speller.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:material_symbols_icons/symbols_map.dart';
-import 'package:material_symbols_icons/get.dart';
+// import 'package:material_symbols_icons/symbols_map.dart';
+// import 'package:material_symbols_icons/get.dart';
 
 void main() {
   runApp(
@@ -18,7 +18,7 @@ void main() {
   );
 }
 
-final iconYouTube = Icon(
+const iconYouTube = Icon(
   Symbols.youtube_activity,
   size: 42,
 );
@@ -36,7 +36,7 @@ class MainApp extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(kDebugMode
                       ? "images/background.jpg"
@@ -107,13 +107,13 @@ class MainApp extends ConsumerWidget {
                           launchUrl(Uri.parse(
                               "https://www.youtube.com/@johnnymatthewsmusic?sub_confirmation=1"));
                         },
-                        child: Row(
+                        child: const Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(4.0),
+                              padding: EdgeInsets.all(4.0),
                               child: iconYouTube,
                             ),
-                            const Text("Subscribe to my YouTube Channel",
+                            Text("Subscribe to my YouTube Channel",
                                 style: TextStyle(fontSize: 32)),
                           ],
                         )),
