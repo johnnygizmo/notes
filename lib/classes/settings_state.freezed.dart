@@ -28,6 +28,7 @@ mixin _$SettingsState {
   int get guess => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   GuessType get guessType => throw _privateConstructorUsedError;
+  bool get scaleHelp => throw _privateConstructorUsedError;
   Set<ChordPattern> get selectedChords => throw _privateConstructorUsedError;
   Set<ScalePattern> get selectedScales => throw _privateConstructorUsedError;
 
@@ -57,6 +58,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       int guess,
       String message,
       GuessType guessType,
+      bool scaleHelp,
       Set<ChordPattern> selectedChords,
       Set<ScalePattern> selectedScales});
 }
@@ -88,6 +90,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? guess = null,
     Object? message = null,
     Object? guessType = null,
+    Object? scaleHelp = null,
     Object? selectedChords = null,
     Object? selectedScales = null,
   }) {
@@ -140,6 +143,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.guessType
           : guessType // ignore: cast_nullable_to_non_nullable
               as GuessType,
+      scaleHelp: null == scaleHelp
+          ? _value.scaleHelp
+          : scaleHelp // ignore: cast_nullable_to_non_nullable
+              as bool,
       selectedChords: null == selectedChords
           ? _value.selectedChords
           : selectedChords // ignore: cast_nullable_to_non_nullable
@@ -173,6 +180,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       int guess,
       String message,
       GuessType guessType,
+      bool scaleHelp,
       Set<ChordPattern> selectedChords,
       Set<ScalePattern> selectedScales});
 }
@@ -202,6 +210,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? guess = null,
     Object? message = null,
     Object? guessType = null,
+    Object? scaleHelp = null,
     Object? selectedChords = null,
     Object? selectedScales = null,
   }) {
@@ -243,6 +252,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.guessType
           : guessType // ignore: cast_nullable_to_non_nullable
               as GuessType,
+      scaleHelp: null == scaleHelp
+          ? _value.scaleHelp
+          : scaleHelp // ignore: cast_nullable_to_non_nullable
+              as bool,
       selectedChords: null == selectedChords
           ? _value._selectedChords
           : selectedChords // ignore: cast_nullable_to_non_nullable
@@ -271,6 +284,7 @@ class _$SettingsStateImpl implements _SettingsState {
       this.guess = 0,
       this.message = "",
       this.guessType = GuessType.scale,
+      this.scaleHelp = false,
       final Set<ChordPattern> selectedChords = const <ChordPattern>{},
       final Set<ScalePattern> selectedScales = const <ScalePattern>{}})
       : _guesses = guesses,
@@ -315,6 +329,9 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   @JsonKey()
   final GuessType guessType;
+  @override
+  @JsonKey()
+  final bool scaleHelp;
   final Set<ChordPattern> _selectedChords;
   @override
   @JsonKey()
@@ -335,7 +352,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(scale: $scale, chord: $chord, interval: $interval, startNote: $startNote, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType, selectedChords: $selectedChords, selectedScales: $selectedScales)';
+    return 'SettingsState(scale: $scale, chord: $chord, interval: $interval, startNote: $startNote, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType, scaleHelp: $scaleHelp, selectedChords: $selectedChords, selectedScales: $selectedScales)';
   }
 
   @override
@@ -362,6 +379,8 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.guessType, guessType) ||
                 other.guessType == guessType) &&
+            (identical(other.scaleHelp, scaleHelp) ||
+                other.scaleHelp == scaleHelp) &&
             const DeepCollectionEquality()
                 .equals(other._selectedChords, _selectedChords) &&
             const DeepCollectionEquality()
@@ -383,6 +402,7 @@ class _$SettingsStateImpl implements _SettingsState {
       guess,
       message,
       guessType,
+      scaleHelp,
       const DeepCollectionEquality().hash(_selectedChords),
       const DeepCollectionEquality().hash(_selectedScales));
 
@@ -409,6 +429,7 @@ abstract class _SettingsState implements SettingsState {
       final int guess,
       final String message,
       final GuessType guessType,
+      final bool scaleHelp,
       final Set<ChordPattern> selectedChords,
       final Set<ScalePattern> selectedScales}) = _$SettingsStateImpl;
 
@@ -436,6 +457,8 @@ abstract class _SettingsState implements SettingsState {
   String get message;
   @override
   GuessType get guessType;
+  @override
+  bool get scaleHelp;
   @override
   Set<ChordPattern> get selectedChords;
   @override
