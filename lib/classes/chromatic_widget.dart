@@ -191,9 +191,7 @@ class ChromaticWidget extends ConsumerWidget {
             child: GridButton(
               items: [
                 [
-                  const GridButtonItem(title: "A"),
                   const GridButtonItem(title: "A#"),
-                  const GridButtonItem(title: "B"),
                   GridButtonItem(
                       title: "B#",
                       color: Colors.grey[200],
@@ -201,9 +199,7 @@ class ChromaticWidget extends ConsumerWidget {
                           color: Colors.grey[500],
                           fontStyle: FontStyle.italic)),
                   const GridButtonItem(title: "C#"),
-                  const GridButtonItem(title: "D"),
                   const GridButtonItem(title: "D#"),
-                  const GridButtonItem(title: "E"),
                   GridButtonItem(
                       title: "E#",
                       color: Colors.grey[200],
@@ -211,11 +207,22 @@ class ChromaticWidget extends ConsumerWidget {
                           color: Colors.grey[500],
                           fontStyle: FontStyle.italic)),
                   const GridButtonItem(title: "F#"),
-                  const GridButtonItem(title: "G"),
                   const GridButtonItem(title: "G#"),
                 ],
-                [
-                  const GridButtonItem(title: "", color: Colors.grey),
+               
+                const [
+                  GridButtonItem(title: "A"),
+                  GridButtonItem(title: "B"),
+                  GridButtonItem(title: "C"),
+                
+                  GridButtonItem(title: "D"),
+                  GridButtonItem(title: "E"),
+                 
+                  GridButtonItem(title: "F"),
+                  GridButtonItem(title: "G"),
+                ],
+                 [
+                  const GridButtonItem(title: "Ab"),
                   const GridButtonItem(title: "Bb"),
                   GridButtonItem(
                       title: "Cb",
@@ -223,9 +230,8 @@ class ChromaticWidget extends ConsumerWidget {
                       textStyle: TextStyle(
                           color: Colors.grey[500],
                           fontStyle: FontStyle.italic)),
-                  const GridButtonItem(title: "C"),
+
                   const GridButtonItem(title: "Db"),
-                  const GridButtonItem(title: "", color: Colors.grey),
                   const GridButtonItem(title: "Eb"),
                   GridButtonItem(
                       title: "Fb",
@@ -233,10 +239,8 @@ class ChromaticWidget extends ConsumerWidget {
                       textStyle: TextStyle(
                           color: Colors.grey[500],
                           fontStyle: FontStyle.italic)),
-                  const GridButtonItem(title: "F"),
+
                   const GridButtonItem(title: "Gb"),
-                  const GridButtonItem(title: "", color: Colors.grey),
-                  const GridButtonItem(title: "Ab")
                 ],
               ],
               onPressed: (value) {
