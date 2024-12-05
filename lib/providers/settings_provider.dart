@@ -53,6 +53,10 @@ const List<(ScalePattern, String)> scaleOptions = <(ScalePattern, String)>[
   (ScalePattern.majorPentatonic, "Major Pent."),
 ];
 
+const flat = "\u266D";
+const natural = "\u266E";
+const sharp = "\u266F";
+
 List<(ChordPattern, String)> chordOptions = <(ChordPattern, String)>[
   (ChordPattern.majorTriad, "Major"),
   (ChordPattern.majorTriad.add7(ImperfectQuality.major), "maj7"),
@@ -225,6 +229,10 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
 
     setScale(scaleType
         .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
+  }
+
+  void toggleHelp() {
+    state = state.copyWith(scaleHelp: !state.scaleHelp);
   }
 }
 

@@ -26,31 +26,31 @@ class ChromaticWidget extends ConsumerWidget {
           //       children: [
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("A#", ref);
+          //               ref.read(settingsProvider.notifier).guess("A$sharp", ref);
           //             },
           //             child: const Text("A♯")),
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("Bb", ref);
+          //               ref.read(settingsProvider.notifier).guess("B$flat", ref);
           //             },
-          //             child: const Text("Bb")),
+          //             child: const Text("B$flat")),
           //       ],
           //     ),
           //     Column(
           //       children: [
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("B", ref);
+          //               ref.read(settingsProvider.notifier).guess("$flat", ref);
           //             },
-          //             child: const Text("B")),
+          //             child: const Text("$flat")),
           //         ElevatedButton(
           //             style: ButtonStyle(
           //                 backgroundColor:
           //                     WidgetStateProperty.all(Colors.grey[300])),
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("Cb", ref);
+          //               ref.read(settingsProvider.notifier).guess("C$flat", ref);
           //             },
-          //             child: const Text("Cb")),
+          //             child: const Text("C$flat")),
           //       ],
           //     ),
           //     Column(
@@ -61,9 +61,9 @@ class ChromaticWidget extends ConsumerWidget {
           //               backgroundColor:
           //                   WidgetStateProperty.all(Colors.grey[300])),
           //           onPressed: () {
-          //             ref.read(settingsProvider.notifier).guess("B#", ref);
+          //             ref.read(settingsProvider.notifier).guess("B$sharp", ref);
           //           },
-          //           child: const Text("B#"),
+          //           child: const Text("B$sharp"),
           //         ),
           //         ElevatedButton(
           //             onPressed: () {
@@ -76,14 +76,14 @@ class ChromaticWidget extends ConsumerWidget {
           //       children: [
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("C#", ref);
+          //               ref.read(settingsProvider.notifier).guess("C$sharp", ref);
           //             },
           //             child: const Text("C♯")),
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("Db", ref);
+          //               ref.read(settingsProvider.notifier).guess("D$flat", ref);
           //             },
-          //             child: const Text("Db")),
+          //             child: const Text("D$flat")),
           //       ],
           //     ),
           //     ElevatedButton(
@@ -95,14 +95,14 @@ class ChromaticWidget extends ConsumerWidget {
           //       children: [
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("D#", ref);
+          //               ref.read(settingsProvider.notifier).guess("D$sharp", ref);
           //             },
           //             child: const Text("D♯")),
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("Eb", ref);
+          //               ref.read(settingsProvider.notifier).guess("E$flat", ref);
           //             },
-          //             child: const Text("Eb")),
+          //             child: const Text("E$flat")),
           //       ],
           //     ),
           //     Column(
@@ -117,9 +117,9 @@ class ChromaticWidget extends ConsumerWidget {
           //                 backgroundColor:
           //                     WidgetStateProperty.all(Colors.grey[300])),
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("Fb", ref);
+          //               ref.read(settingsProvider.notifier).guess("F$flat", ref);
           //             },
-          //             child: const Text("Fb")),
+          //             child: const Text("F$flat")),
           //       ],
           //     ),
           //     Column(
@@ -129,7 +129,7 @@ class ChromaticWidget extends ConsumerWidget {
           //                 backgroundColor:
           //                     WidgetStateProperty.all(Colors.grey[300])),
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("E#", ref);
+          //               ref.read(settingsProvider.notifier).guess("E$sharp", ref);
           //             },
           //             child: const Text("E♯")),
           //         ElevatedButton(
@@ -143,14 +143,14 @@ class ChromaticWidget extends ConsumerWidget {
           //       children: [
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("F#", ref);
+          //               ref.read(settingsProvider.notifier).guess("F$sharp", ref);
           //             },
           //             child: const Text("F♯")),
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("Gb", ref);
+          //               ref.read(settingsProvider.notifier).guess("G$flat", ref);
           //             },
-          //             child: const Text("Gb")),
+          //             child: const Text("G$flat")),
           //       ],
           //     ),
           //     ElevatedButton(
@@ -164,15 +164,15 @@ class ChromaticWidget extends ConsumerWidget {
           //           width: 40,
           //           child: ElevatedButton(
           //               onPressed: () {
-          //                 ref.read(settingsProvider.notifier).guess("G#", ref);
+          //                 ref.read(settingsProvider.notifier).guess("G$sharp", ref);
           //               },
           //               child: const Text("G♯")),
           //         ),
           //         ElevatedButton(
           //             onPressed: () {
-          //               ref.read(settingsProvider.notifier).guess("Ab", ref);
+          //               ref.read(settingsProvider.notifier).guess("A$flat", ref);
           //             },
-          //             child: const Text("Ab")),
+          //             child: const Text("A$flat")),
           //       ],
           //     ),
           //   ],
@@ -191,56 +191,51 @@ class ChromaticWidget extends ConsumerWidget {
             child: GridButton(
               items: [
                 [
-                  const GridButtonItem(title: "A#"),
+                  const GridButtonItem(title: "A$sharp"),
                   GridButtonItem(
-                      title: "B#",
+                      title: "B$sharp",
                       color: Colors.grey[200],
                       textStyle: TextStyle(
                           color: Colors.grey[500],
                           fontStyle: FontStyle.italic)),
-                  const GridButtonItem(title: "C#"),
-                  const GridButtonItem(title: "D#"),
+                  const GridButtonItem(title: "C$sharp"),
+                  const GridButtonItem(title: "D$sharp"),
                   GridButtonItem(
-                      title: "E#",
+                      title: "E$sharp",
                       color: Colors.grey[200],
                       textStyle: TextStyle(
                           color: Colors.grey[500],
                           fontStyle: FontStyle.italic)),
-                  const GridButtonItem(title: "F#"),
-                  const GridButtonItem(title: "G#"),
+                  const GridButtonItem(title: "F$sharp"),
+                  const GridButtonItem(title: "G$sharp"),
                 ],
-               
                 const [
                   GridButtonItem(title: "A"),
                   GridButtonItem(title: "B"),
                   GridButtonItem(title: "C"),
-                
                   GridButtonItem(title: "D"),
                   GridButtonItem(title: "E"),
-                 
                   GridButtonItem(title: "F"),
                   GridButtonItem(title: "G"),
                 ],
-                 [
-                  const GridButtonItem(title: "Ab"),
-                  const GridButtonItem(title: "Bb"),
+                [
+                  const GridButtonItem(title: "A$flat"),
+                  const GridButtonItem(title: "B$flat"),
                   GridButtonItem(
-                      title: "Cb",
+                      title: "C$flat",
                       color: Colors.grey[200],
                       textStyle: TextStyle(
                           color: Colors.grey[500],
                           fontStyle: FontStyle.italic)),
-
-                  const GridButtonItem(title: "Db"),
-                  const GridButtonItem(title: "Eb"),
+                  const GridButtonItem(title: "D$flat"),
+                  const GridButtonItem(title: "E$flat"),
                   GridButtonItem(
-                      title: "Fb",
+                      title: "F$flat",
                       color: Colors.grey[200],
                       textStyle: TextStyle(
                           color: Colors.grey[500],
                           fontStyle: FontStyle.italic)),
-
-                  const GridButtonItem(title: "Gb"),
+                  const GridButtonItem(title: "G$flat"),
                 ],
               ],
               onPressed: (value) {

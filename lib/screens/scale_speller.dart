@@ -14,6 +14,42 @@ class ScaleSpeller extends ConsumerStatefulWidget {
   ConsumerState<ScaleSpeller> createState() => _ScaleSpellerState();
 }
 
+Map<ScalePattern, List<String>> scaleHelpers = {
+  ScalePattern.ionian: ["1", "2", "3", "4", "5", "6", "7"],
+  ScalePattern.dorian: ["1", "2", "${flat}3", "4", "5", "6", "${flat}7"],
+  ScalePattern.phrygian: [
+    "1",
+    "${flat}2",
+    "${flat}3",
+    "4",
+    "5",
+    "${flat}6",
+    "${flat}7"
+  ],
+  ScalePattern.lydian: ["1", "2", "3", "${sharp}4", "5", "6", "7"],
+  ScalePattern.mixolydian: ["1", "2", "3", "4", "5", "6", "${flat}7"],
+  ScalePattern.aeolian: [
+    "1",
+    "2",
+    "${flat}3",
+    "4",
+    "5",
+    "${flat}6",
+    "${flat}7"
+  ],
+  ScalePattern.locrian: [
+    "1",
+    "${flat}2",
+    "${flat}3",
+    "4",
+    "${flat}5",
+    "${flat}6",
+    "${flat}7"
+  ],
+  ScalePattern.majorPentatonic: ["1", "2", "3", "5", "6"],
+  ScalePattern.minorPentatonic: ["1", "${flat}3", "4", "5", "${flat}7"],
+};
+
 class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
   var node = FocusNode();
 
@@ -43,6 +79,18 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
       appBar: AppBar(
         title: const Text('Scale Speller'),
         backgroundColor: Colors.deepOrange,
+        actions: [
+          Row(
+            children: [
+              const Text("Scale Help: "),
+              Switch(
+                  value: sp.scaleHelp,
+                  onChanged: (v) {
+                    ref.read(settingsProvider.notifier).toggleHelp();
+                  })
+            ],
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: KeyboardListener(
@@ -52,7 +100,7 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
             if (value.logicalKey == LogicalKeyboardKey.space) {
               ref.read(settingsProvider.notifier).nextScale();
             }
-        
+
             String? guess = eventToGuess(value);
             if (guess != null) {
               ref.read(settingsProvider.notifier).guess(guess, ref);
@@ -63,7 +111,7 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                   const SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 SegmentedButton<ScalePattern>(
@@ -91,6 +139,29 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
                     'Spell Scale: ${sp.scale?.degrees[0]} ${sp.scale!.pattern.name}',
                     style: const TextStyle(fontSize: 26)),
                 Text(sp.message, style: const TextStyle(fontSize: 24)),
+                sp.scaleHelp
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text("Scale Variation from Major"),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: scaleHelpers[sp.scale?.pattern]!
+                                    .map((e) => Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            e,
+                                            style: TextStyle(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ))
+                                    .toList()),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 sp.guesses.isEmpty
                     ? const Text("Entries: [ ]")
                     : Text("Entries: ${sp.guesses}",
