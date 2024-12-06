@@ -421,31 +421,32 @@ void guessNumber(String note, WidgetRef ref) {
         .cast<int>();
     var scaleSet = scales.map((e) => ScalePattern.fromBinary(e)).toSet();
 
-    List<List<String>> chords =
-        (jsonDecode(sp.getString("selectedChords") ?? "[[\"M3\",\"P5\"]]")
-                as List<dynamic>)
-            .map((e) => (e as List<dynamic>).cast<String>().toList())
-            .toList();
+    String selectedChords =
+        sp.getString("selectedChords") ?? "[[\"M3\",\"P5\"]]";
+
+    List<List<String>> chords = (jsonDecode(selectedChords) as List<dynamic>)
+        .map((e) => (e as List<dynamic>).map((item) => item as String).toList())
+        .toList();
+
     Set<ChordPattern> chordSet = chords.map((c) {
       ChordPattern cp = ChordPattern(c.map((i) => Interval.parse(i)).toList());
       return cp;
     }).toSet();
 
-    List<String> keys =
-        (jsonDecode(sp.getString("selectedKeys") ?? "[\"major\"]")
-                as List<dynamic>)
-            .cast<String>().toList();
-    
+    var selectedKeysJson = sp.getString("selectedKeys") ?? "[\"major\"]";
+    List<String> keys = (jsonDecode(selectedKeysJson) as List<dynamic>)
+        .map((e) => e as String)
+        .toList();
+
     Set<TonalMode> keySet = {};
     for (var k in keys) {
-      if(k == "major"){
+      if (k == "major") {
         keySet.add(TonalMode.major);
-      } 
-      if(k == "minor") {
+      }
+      if (k == "minor") {
         keySet.add(TonalMode.minor);
       }
     }
-
 
     state = state.copyWith(
         selectedScales: scaleSet,
@@ -470,7 +471,7 @@ void guessNumber(String note, WidgetRef ref) {
   void updateSelectedKeys(Set<TonalMode> keys, WidgetRef ref) async {
     var sp = await ref.read(sharedPreferencesProvider.future);
     sp.setString(
-        "selectedChords", jsonEncode(keys.map((k) => k.toString()).toList()));
+        "selectedKeys", jsonEncode(keys.map((k) => k.toString()).toList()));
     state = state.copyWith(selectedKeys: keys);
   }
 
