@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:music_notes/music_notes.dart';
+import 'package:notes/classes/number_step.dart';
 import 'package:notes/providers/settings_provider.dart';
 
 part 'settings_state.freezed.dart';
@@ -12,6 +13,8 @@ class SettingsState with _$SettingsState {
           Interval? interval,
           Key? key,
           Note? startNote,
+          @Default(8) int numberCount,
+          @Default(<NumberStep>[]) List<NumberStep> numberSteps,
           @Default(0) currentRun,
           @Default(0) chordStreak,
           @Default(0) scaleStreak,

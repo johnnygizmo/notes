@@ -1,25 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notes/classes/chromatic_widget.dart';
+import 'package:notes/classes/number_step.dart';
 import 'package:notes/providers/settings_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-Map<String, String> intervals = {
-  'P1': 'Unison',
-  'm2': 'Minor 2nd',
-  'M2': 'Major 2nd',
-  'm3': 'Minor 3rd',
-  'M3': 'Major 3rd',
-  'P4': 'Perfect 4th',
-  'A4': 'Augmented 4th',
-  'D5': 'Diminsiehd 5th',
-  'P5': 'Perfect 5th',
-  'm6': 'Minor 6th',
-  'M6': 'Major 6th',
-  'm7': 'Minor 7th',
-  'M7': 'Major 7th',
-  'P8': 'Octave'
-};
 
 class ChordNumbers extends ConsumerStatefulWidget {
   const ChordNumbers({super.key});
@@ -36,7 +21,7 @@ class _ChordNumbersState extends ConsumerState<ChordNumbers> {
     var sp = ref.watch(settingsProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Interval Speller'),
+        title: const Text('Chord Numbers'),
         backgroundColor: Colors.grey[300],
       ),
       body: KeyboardListener(
@@ -56,9 +41,62 @@ class _ChordNumbersState extends ConsumerState<ChordNumbers> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                  'Interval: ${intervals[sp.interval.toString()]} up from ${sp.startNote}',
-                  style: const TextStyle(fontSize: 26)),
+             
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: 
+              //   sp.numberSteps.map<Widget>((s)=>Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Text(s.arabic.toString(),style: const TextStyle(fontSize: 26)),
+              //   )).toList()
+              // ,),
+Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    VerticalDivider(  width: 20,
+            thickness: 1,
+            indent: 0,
+            endIndent: 0,
+            color: Colors.grey,), // Divider at the start
+    ...sp.numberSteps.asMap().entries.map<Widget>((entry) {
+      int index = entry.key;
+      var step = entry.value;
+      List<Widget> widgets = [];
+      
+      // Add the step's text
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            step.arabic.toString(),
+            style: const TextStyle(fontSize: 26),
+          ),
+        ),
+      );
+      
+      // Add a divider after every fourth step
+      if ((index + 1) % 4 == 0) {
+        widgets.add(VerticalDivider(  width: 20,
+            thickness: 1,
+            indent: 0,
+            endIndent: 0,
+            color: Colors.grey,));
+      }
+      
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: widgets,
+      );
+    }).toList(),
+    VerticalDivider(  width: 20,
+            thickness: 1,
+            indent: 20,
+            endIndent: 0,
+            color: Colors.grey,), // Divider at the end
+  ],
+),
+
 
               Text(sp.message, style: const TextStyle(fontSize: 24)),
 

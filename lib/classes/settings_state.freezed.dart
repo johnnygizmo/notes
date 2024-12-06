@@ -21,6 +21,8 @@ mixin _$SettingsState {
   Interval? get interval => throw _privateConstructorUsedError;
   Key? get key => throw _privateConstructorUsedError;
   Note? get startNote => throw _privateConstructorUsedError;
+  int get numberCount => throw _privateConstructorUsedError;
+  List<NumberStep> get numberSteps => throw _privateConstructorUsedError;
   dynamic get currentRun => throw _privateConstructorUsedError;
   dynamic get chordStreak => throw _privateConstructorUsedError;
   dynamic get scaleStreak => throw _privateConstructorUsedError;
@@ -53,6 +55,8 @@ abstract class $SettingsStateCopyWith<$Res> {
       Interval? interval,
       Key? key,
       Note? startNote,
+      int numberCount,
+      List<NumberStep> numberSteps,
       dynamic currentRun,
       dynamic chordStreak,
       dynamic scaleStreak,
@@ -87,6 +91,8 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? interval = freezed,
     Object? key = freezed,
     Object? startNote = freezed,
+    Object? numberCount = null,
+    Object? numberSteps = null,
     Object? currentRun = freezed,
     Object? chordStreak = freezed,
     Object? scaleStreak = freezed,
@@ -121,6 +127,14 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.startNote
           : startNote // ignore: cast_nullable_to_non_nullable
               as Note?,
+      numberCount: null == numberCount
+          ? _value.numberCount
+          : numberCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      numberSteps: null == numberSteps
+          ? _value.numberSteps
+          : numberSteps // ignore: cast_nullable_to_non_nullable
+              as List<NumberStep>,
       currentRun: freezed == currentRun
           ? _value.currentRun
           : currentRun // ignore: cast_nullable_to_non_nullable
@@ -187,6 +201,8 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       Interval? interval,
       Key? key,
       Note? startNote,
+      int numberCount,
+      List<NumberStep> numberSteps,
       dynamic currentRun,
       dynamic chordStreak,
       dynamic scaleStreak,
@@ -219,6 +235,8 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? interval = freezed,
     Object? key = freezed,
     Object? startNote = freezed,
+    Object? numberCount = null,
+    Object? numberSteps = null,
     Object? currentRun = freezed,
     Object? chordStreak = freezed,
     Object? scaleStreak = freezed,
@@ -253,6 +271,14 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.startNote
           : startNote // ignore: cast_nullable_to_non_nullable
               as Note?,
+      numberCount: null == numberCount
+          ? _value.numberCount
+          : numberCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      numberSteps: null == numberSteps
+          ? _value._numberSteps
+          : numberSteps // ignore: cast_nullable_to_non_nullable
+              as List<NumberStep>,
       currentRun: freezed == currentRun ? _value.currentRun! : currentRun,
       chordStreak: freezed == chordStreak ? _value.chordStreak! : chordStreak,
       scaleStreak: freezed == scaleStreak ? _value.scaleStreak! : scaleStreak,
@@ -303,6 +329,8 @@ class _$SettingsStateImpl implements _SettingsState {
       this.interval,
       this.key,
       this.startNote,
+      this.numberCount = 8,
+      final List<NumberStep> numberSteps = const <NumberStep>[],
       this.currentRun = 0,
       this.chordStreak = 0,
       this.scaleStreak = 0,
@@ -315,7 +343,8 @@ class _$SettingsStateImpl implements _SettingsState {
       final Set<ChordPattern> selectedChords = const <ChordPattern>{},
       final Set<ScalePattern> selectedScales = const <ScalePattern>{},
       final Set<TonalMode> selectedKeys = const <TonalMode>{}})
-      : _guesses = guesses,
+      : _numberSteps = numberSteps,
+        _guesses = guesses,
         _selectedChords = selectedChords,
         _selectedScales = selectedScales,
         _selectedKeys = selectedKeys;
@@ -330,6 +359,18 @@ class _$SettingsStateImpl implements _SettingsState {
   final Key? key;
   @override
   final Note? startNote;
+  @override
+  @JsonKey()
+  final int numberCount;
+  final List<NumberStep> _numberSteps;
+  @override
+  @JsonKey()
+  List<NumberStep> get numberSteps {
+    if (_numberSteps is EqualUnmodifiableListView) return _numberSteps;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_numberSteps);
+  }
+
   @override
   @JsonKey()
   final dynamic currentRun;
@@ -392,7 +433,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(scale: $scale, chord: $chord, interval: $interval, key: $key, startNote: $startNote, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType, scaleHelp: $scaleHelp, selectedChords: $selectedChords, selectedScales: $selectedScales, selectedKeys: $selectedKeys)';
+    return 'SettingsState(scale: $scale, chord: $chord, interval: $interval, key: $key, startNote: $startNote, numberCount: $numberCount, numberSteps: $numberSteps, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType, scaleHelp: $scaleHelp, selectedChords: $selectedChords, selectedScales: $selectedScales, selectedKeys: $selectedKeys)';
   }
 
   @override
@@ -407,6 +448,10 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.key, key) || other.key == key) &&
             (identical(other.startNote, startNote) ||
                 other.startNote == startNote) &&
+            (identical(other.numberCount, numberCount) ||
+                other.numberCount == numberCount) &&
+            const DeepCollectionEquality()
+                .equals(other._numberSteps, _numberSteps) &&
             const DeepCollectionEquality()
                 .equals(other.currentRun, currentRun) &&
             const DeepCollectionEquality()
@@ -431,25 +476,28 @@ class _$SettingsStateImpl implements _SettingsState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      scale,
-      chord,
-      interval,
-      key,
-      startNote,
-      const DeepCollectionEquality().hash(currentRun),
-      const DeepCollectionEquality().hash(chordStreak),
-      const DeepCollectionEquality().hash(scaleStreak),
-      const DeepCollectionEquality().hash(intervalStreak),
-      const DeepCollectionEquality().hash(_guesses),
-      guess,
-      message,
-      guessType,
-      scaleHelp,
-      const DeepCollectionEquality().hash(_selectedChords),
-      const DeepCollectionEquality().hash(_selectedScales),
-      const DeepCollectionEquality().hash(_selectedKeys));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        scale,
+        chord,
+        interval,
+        key,
+        startNote,
+        numberCount,
+        const DeepCollectionEquality().hash(_numberSteps),
+        const DeepCollectionEquality().hash(currentRun),
+        const DeepCollectionEquality().hash(chordStreak),
+        const DeepCollectionEquality().hash(scaleStreak),
+        const DeepCollectionEquality().hash(intervalStreak),
+        const DeepCollectionEquality().hash(_guesses),
+        guess,
+        message,
+        guessType,
+        scaleHelp,
+        const DeepCollectionEquality().hash(_selectedChords),
+        const DeepCollectionEquality().hash(_selectedScales),
+        const DeepCollectionEquality().hash(_selectedKeys)
+      ]);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -467,6 +515,8 @@ abstract class _SettingsState implements SettingsState {
       final Interval? interval,
       final Key? key,
       final Note? startNote,
+      final int numberCount,
+      final List<NumberStep> numberSteps,
       final dynamic currentRun,
       final dynamic chordStreak,
       final dynamic scaleStreak,
@@ -490,6 +540,10 @@ abstract class _SettingsState implements SettingsState {
   Key? get key;
   @override
   Note? get startNote;
+  @override
+  int get numberCount;
+  @override
+  List<NumberStep> get numberSteps;
   @override
   dynamic get currentRun;
   @override
