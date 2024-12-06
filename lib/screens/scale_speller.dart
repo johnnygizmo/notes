@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:music_notes/music_notes.dart';
@@ -52,6 +54,12 @@ Map<ScalePattern, List<String>> scaleHelpers = {
 
 class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
   var node = FocusNode();
+
+  @override void initState() {
+    
+    ref.read(settingsProvider.notifier).initLists(ref);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +125,12 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
                 SegmentedButton<ScalePattern>(
                     multiSelectionEnabled: true,
                     onSelectionChanged: (p0) {
-                      ref.read(settingsProvider.notifier).state =
-                          sp.copyWith(selectedScales: p0);
+                      ref.read(settingsProvider.notifier).updateSelectedScales(p0);
+                      var intList = (p0.map((e) => e.toBinary().$1,)).toList();
+                      var scalePatternList = jsonEncode(intList);
+                      ref.read(sharedPreferencesProvider).whenData((sp){
+                        sp.setString("selectedScales", scalePatternList);
+                      });
                     },
                     segments: (scaleOptions
                         .map(((ScalePattern, String) scale) =>

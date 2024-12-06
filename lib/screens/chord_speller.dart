@@ -16,6 +16,12 @@ class ChordSpeller extends ConsumerStatefulWidget {
 class _ChordSpellerState extends ConsumerState<ChordSpeller> {
   var node = FocusNode();
 
+  @override void initState() {
+    ref.read(settingsProvider.notifier).initLists(ref);
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var sp = ref.watch(settingsProvider);
@@ -49,8 +55,7 @@ class _ChordSpellerState extends ConsumerState<ChordSpeller> {
                 SegmentedButton<ChordPattern>(
                     multiSelectionEnabled: true,
                     onSelectionChanged: (p0) {
-                      ref.read(settingsProvider.notifier).state =
-                          sp.copyWith(selectedChords: p0);
+                      ref.read(settingsProvider.notifier).updateSelectedChords(p0,ref);
                     },
                     segments: (chordOptions
                         .map(((ChordPattern, String) chord) =>

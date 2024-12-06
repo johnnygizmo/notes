@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:music_notes/music_notes.dart';
 import 'package:notes/classes/chromatic_widget.dart';
 import 'package:notes/classes/key_widget.dart';
 import 'package:notes/providers/settings_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:notes/providers/shared_preferences_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:notes/providers/shared_preferences_provider.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class KeySpeller extends ConsumerStatefulWidget {
   const KeySpeller({super.key});
@@ -19,27 +18,18 @@ class KeySpeller extends ConsumerStatefulWidget {
 class _KeySpellerState extends ConsumerState<KeySpeller> {
   var node = FocusNode();
 
+  @override void initState() {  
+    ref.read(settingsProvider.notifier).initLists(ref);
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var sp = ref.watch(settingsProvider);
     if (sp.selectedKeys.isEmpty) {
       sp = sp.copyWith(selectedKeys: {TonalMode.major});
     }
-
-    String best = "";
-    SharedPreferences? shp = ref.read(sharedPreferencesProvider).when(
-      data: (data) {
-        return data;
-      },
-      error: (error, stackTrace) {
-        return null;
-      },
-      loading: () {
-        return null;
-      },
-    );
-
-    best = shp != null ? shp.getInt("bestScale").toString() : "0";
 
     return Scaffold(
       appBar: AppBar(
@@ -84,8 +74,7 @@ class _KeySpellerState extends ConsumerState<KeySpeller> {
                 SegmentedButton<TonalMode>(
                     multiSelectionEnabled: true,
                     onSelectionChanged: (p0) {
-                      ref.read(settingsProvider.notifier).state =
-                          sp.copyWith(selectedKeys: p0);
+                      ref.read(settingsProvider.notifier).updateSelectedKeys(p0,ref);
                     },
                     segments: (keyOptions
                         .map(((TonalMode, String) key) =>

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
@@ -140,10 +141,10 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
   void guessKey(int num, String acc, WidgetRef ref) {
     bool correct = false;
 
-    if (num == 0 && state.key!.signature.notes.length == 0) {
+    if (num == 0 && state.key!.signature.notes.isEmpty) {
       correct = true;
     }
-    if (num > 0 && state.key!.signature.notes.length > 0) {
+    if (num > 0 && state.key!.signature.notes.isNotEmpty) {
       if ((state.key!.signature.notes[0].accidental.isSharp && acc == "s") ||
           (state.key!.signature.notes[0].accidental.isFlat && acc == "f")) {
         if (num == state.key!.signature.notes.length) {
@@ -170,93 +171,101 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
     }
   }
 
-  void guess(String note, WidgetRef ref) async {
-    if (state.guessType == GuessType.keySignature) {
-      Note n = Note.parse(note);
-      if (state.guess >= state.key!.signature.notes.length) {
-        return;
-      }
-
-      if (state.key!.signature.notes[state.guess] == n) {
+  void guessKeySignature(String note, WidgetRef ref) {
+    Note n = Note.parse(note);
+    if (state.guess >= state.key!.signature.notes.length) {
+      return;
+    }
+    if (state.key!.signature.notes[state.guess] == n) {
+      state = state.copyWith(
+          guess: state.guess + 1,
+          guesses: [...state.guesses, n],
+          message: "$n is Correct");
+      if (state.guess == state.key!.signature.notes.length) {
         state = state.copyWith(
-            guess: state.guess + 1,
-            guesses: [...state.guesses, n],
-            message: "$n is Correct");
-        if (state.guess == state.key!.signature.notes.length) {
-          state = state.copyWith(
-              message: "Key Completed", currentRun: state.currentRun + 1);
-
-          // var shp = ref.read(sharedPreferencesProvider);
-
-          // shp.whenData((data) {
-          //   if (data.getInt("bestScale") == null) {
-          //     data.setInt("bestScale", state.currentRun);
-          //   } else if (state.currentRun + 1 > data.getInt("bestScale") ?? 0) {
-          //     data.setInt("bestScale", state.currentRun);
-          //   }
-          // });
-        }
-      } else {
-        state = state.copyWith(message: "$n is incorrect", currentRun: -1);
+            message: "Key Completed", currentRun: state.currentRun + 1);
       }
+    } else {
+      state = state.copyWith(message: "$n is incorrect", currentRun: -1);
+    }
+  }
+
+  guessInterval(String note, WidgetRef ref) {
+    if (state.guesses.isNotEmpty) {
+      return;
     }
 
-    if (state.guessType == GuessType.interval) {
-      if (state.guesses.isNotEmpty) {
-        return;
-      }
+    Note n = Note.parse(note);
+    if (n.isEnharmonicWith(state.startNote!.transposeBy(state.interval!))) {
+      state = state.copyWith(message: "Correct", guesses: [n], guess: 1);
+    } else {
+      state = state.copyWith(message: "Incorrect");
+    }
+  }
 
-      Note n = Note.parse(note);
-      if (n.isEnharmonicWith(state.startNote!.transposeBy(state.interval!))) {
-        state = state.copyWith(message: "Correct", guesses: [n], guess: 1);
-      } else {
-        state = state.copyWith(message: "Incorrect");
-      }
-    } else if (state.guessType == GuessType.scale) {
-      Note n = Note.parse(note);
-      if (state.guess >= state.scale!.degrees.length) {
-        return;
-      }
+  void guessScale(String note, WidgetRef ref) {
+    Note n = Note.parse(note);
+    if (state.guess >= state.scale!.degrees.length) {
+      return;
+    }
 
-      if (state.scale!.degrees[state.guess] == n) {
+    if (state.scale!.degrees[state.guess] == n) {
+      state = state.copyWith(
+          guess: state.guess + 1,
+          guesses: [...state.guesses, n],
+          message: "$n is Correct");
+      if (state.guess == state.scale!.degrees.length) {
         state = state.copyWith(
-            guess: state.guess + 1,
-            guesses: [...state.guesses, n],
-            message: "$n is Correct");
-        if (state.guess == state.scale!.degrees.length) {
-          state = state.copyWith(
-              message: "Scale Completed", currentRun: state.currentRun + 1);
+            message: "Scale Completed", currentRun: state.currentRun + 1);
 
-          var shp = ref.read(sharedPreferencesProvider);
+        var shp = ref.read(sharedPreferencesProvider);
 
-          shp.whenData((data) {
-            if (data.getInt("bestScale") == null) {
-              data.setInt("bestScale", state.currentRun);
-            } else if (state.currentRun + 1 > data.getInt("bestScale") ?? 0) {
-              data.setInt("bestScale", state.currentRun);
-            }
-          });
-        }
-      } else {
-        state = state.copyWith(message: "$n is incorrect", currentRun: -1);
+        shp.whenData((data) {
+          if (data.getInt("bestScale") == null) {
+            data.setInt("bestScale", state.currentRun);
+          } else if (state.currentRun + 1 > data.getInt("bestScale") ?? 0) {
+            data.setInt("bestScale", state.currentRun);
+          }
+        });
       }
-    } else if (state.guessType == GuessType.chord) {
-      Note n = Note.parse(note);
-      if (state.guess > state.chord!.items.length) {
-        return;
-      }
+    } else {
+      state = state.copyWith(message: "$n is incorrect", currentRun: -1);
+    }
+  }
 
-      if (state.chord!.items[state.guess] == n) {
-        state = state.copyWith(
-            guess: state.guess + 1,
-            guesses: [...state.guesses, n],
-            message: "$n is Correct");
-        if (state.guess == state.chord!.items.length) {
-          state = state.copyWith(message: "Chord Completed");
-        }
-      } else {
-        state = state.copyWith(message: "$n is incorrect");
+  void guessChord(String note, WidgetRef ref) {
+    Note n = Note.parse(note);
+    if (state.guess > state.chord!.items.length) {
+      return;
+    }
+
+    if (state.chord!.items[state.guess] == n) {
+      state = state.copyWith(
+          guess: state.guess + 1,
+          guesses: [...state.guesses, n],
+          message: "$n is Correct");
+      if (state.guess == state.chord!.items.length) {
+        state = state.copyWith(message: "Chord Completed");
       }
+    } else {
+      state = state.copyWith(message: "$n is incorrect");
+    }
+  }
+
+  void guess(String note, WidgetRef ref) async {
+    switch (state.guessType) {
+      case GuessType.keySignature:
+        guessKeySignature(note, ref);
+        break;
+      case GuessType.interval:
+        guessInterval(note, ref);
+        break;
+      case GuessType.scale:
+        guessScale(note, ref);
+        break;
+      case GuessType.chord:
+        guessChord(note, ref);
+        break;
     }
   }
 
@@ -323,6 +332,68 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
   void toggleHelp() {
     state = state.copyWith(scaleHelp: !state.scaleHelp);
   }
+
+  void initLists(WidgetRef ref) async {
+    var sp = await ref.read(sharedPreferencesProvider.future);
+    List<int> scales = (jsonDecode(sp.getString("selectedScales") ?? "[2741]")
+            as List<dynamic>)
+        .cast<int>();
+    var scaleSet = scales.map((e) => ScalePattern.fromBinary(e)).toSet();
+
+    List<List<String>> chords =
+        (jsonDecode(sp.getString("selectedChords") ?? "[[\"M3\",\"P5\"]]")
+                as List<dynamic>)
+            .map((e) => (e as List<dynamic>).cast<String>().toList())
+            .toList();
+    Set<ChordPattern> chordSet = chords.map((c) {
+      ChordPattern cp = ChordPattern(c.map((i) => Interval.parse(i)).toList());
+      return cp;
+    }).toSet();
+
+    List<String> keys =
+        (jsonDecode(sp.getString("selectedKeys") ?? "[\"major\"]")
+                as List<dynamic>)
+            .cast<String>().toList();
+    
+    Set<TonalMode> keySet = {};
+    for (var k in keys) {
+      if(k == "major"){
+        keySet.add(TonalMode.major);
+      } 
+      if(k == "minor") {
+        keySet.add(TonalMode.minor);
+      }
+    }
+
+
+    state = state.copyWith(
+        selectedScales: scaleSet,
+        selectedChords: chordSet,
+        selectedKeys: keySet);
+  }
+
+  void updateSelectedScales(Set<ScalePattern> scales) {
+    state = state.copyWith(selectedScales: scales);
+  }
+
+  void updateSelectedChords(Set<ChordPattern> chords, WidgetRef ref) async {
+    var patterns = chords.map((c) {
+      return c.intervals.map((i) => i.toString()).toList();
+    }).toList();
+    var sp = await ref.read(sharedPreferencesProvider.future);
+    sp.setString("selectedChords", jsonEncode(patterns));
+
+    state = state.copyWith(selectedChords: chords);
+  }
+
+  void updateSelectedKeys(Set<TonalMode> keys, WidgetRef ref) async {
+    var sp = await ref.read(sharedPreferencesProvider.future);
+    sp.setString(
+        "selectedChords", jsonEncode(keys.map((k) => k.toString()).toList()));
+    state = state.copyWith(selectedKeys: keys);
+  }
+
+  void updateSelectedIntervals() {}
 }
 
 final settingsProvider =
