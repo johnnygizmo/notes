@@ -86,22 +86,19 @@ class _ChordNumbersState extends ConsumerState<ChordNumbers> {
                   // Divider at the end
                 ],
               ),
-
               Text(sp.message, style: const TextStyle(fontSize: 24)),
-
               sp.guesses.isEmpty
-                  ? const Text("Entries: [ ]")
-                  : Text("Entries: ${sp.guesses}"),
+                  ? const Text("Root Notes: [ ]")
+                  : Text("Root Notes: ${sp.guesses}"),
               const SizedBox(
                 height: 25,
               ),
-              //  Text(sp.guesses.toString(), style: const TextStyle(fontSize: 22)),
               sp.guess >= sp.numberSteps.length
                   ? ElevatedButton(
                       onPressed: () {
                         ref.read(settingsProvider.notifier).nextInterval();
                       },
-                      child: const Text("Next Interval"))
+                      child: const Text("Next Chart"))
                   : const ChromaticWidget(),
               const SizedBox(
                 height: 25,
