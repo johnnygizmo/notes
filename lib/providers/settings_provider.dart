@@ -120,47 +120,128 @@ String chordPatternToType(ChordPattern p) {
   return "";
 }
 
-
-Map<int,NumberStep> numberStepsOptions = {
-0: NumberStep(semitone: 0, interval: "PU", arabic: "1", roman: "I", accidental: "", defaultTonality: "major"),
-1: NumberStep(semitone: 0, interval: "PU", arabic: "1", roman: "I", accidental: ""),
-  2: NumberStep(semitone: 1, interval: "m2", arabic: "1", roman: "I", accidental: sharp),
-
-  3: NumberStep(semitone: 1, interval: "m2", arabic: "2", roman: "II", accidental: flat),
-  4: NumberStep(semitone: 2, interval: "M2", arabic: "2", roman: "II", accidental: "", defaultTonality: "minor"),
-  5: NumberStep(semitone: 2, interval: "M2", arabic: "2", roman: "II", accidental: ""),
-  6: NumberStep(semitone: 3, interval: "m3", arabic: "2", roman: "II", accidental: sharp),
-  
-  7: NumberStep(semitone: 4, interval: "m3", arabic: "3", roman: "III", accidental: flat),
-  8: NumberStep(semitone: 4, interval: "M3", arabic: "3", roman: "III", accidental: "", defaultTonality: "minor"),
-  9: NumberStep(semitone: 4, interval: "M3", arabic: "3", roman: "III", accidental: "", ),
-  
-  10: NumberStep(semitone: 5, interval: "P4", arabic: "4", roman: "IV", accidental: "", defaultTonality: "major"),
-  11: NumberStep(semitone: 5, interval: "P4", arabic: "4", roman: "IV", accidental: ""),
-  12: NumberStep(semitone: 6, interval: "A4", arabic: "4", roman: "IV", accidental: sharp),
-  
-  13: NumberStep(semitone: 6, interval: "d5", arabic: "5", roman: "V", accidental: flat),
-  14: NumberStep(semitone: 7, interval: "P5", arabic: "5", roman: "V", accidental: "", defaultTonality: "major"),
-  15: NumberStep(semitone: 7, interval: "P5", arabic: "5", roman: "V", accidental: "", ),
-  16: NumberStep(semitone: 8, interval: "m6", arabic: "5", roman: "V", accidental: sharp),
-  
-  17: NumberStep(semitone: 8, interval: "m6", arabic: "6", roman: "VI", accidental: flat),
-  18: NumberStep(semitone: 9, interval: "M6", arabic: "6", roman: "VI", accidental: "", defaultTonality: "minor"),
-  19: NumberStep(semitone: 9, interval: "M6", arabic: "6", roman: "VI", accidental: "",),
-  20: NumberStep(semitone: 10, interval: "m7", arabic: "6", roman: "VI", accidental: sharp),
-  
-  21: NumberStep(semitone: 10, interval: "m7", arabic: "7", roman: "VII", accidental: flat),
-  22: NumberStep(semitone: 11, interval: "M7", arabic: "7", roman: "VII", accidental: "", defaultTonality: "diminshed"),
-  23: NumberStep(semitone: 11, interval: "M7", arabic: "7", roman: "VII", accidental: "",),
+Map<int, NumberStep> numberStepsOptions = {
+  0: NumberStep(
+      semitone: 0,
+      interval: "P1",
+      arabic: "1",
+      roman: "I",
+      accidental: "",
+      defaultTonality: "major"),
+  1: NumberStep(
+      semitone: 0, interval: "P1", arabic: "1", roman: "I", accidental: ""),
+  2: NumberStep(
+      semitone: 1, interval: "m2", arabic: "1", roman: "I", accidental: sharp),
+  3: NumberStep(
+      semitone: 1, interval: "m2", arabic: "2", roman: "II", accidental: flat),
+  4: NumberStep(
+      semitone: 2,
+      interval: "M2",
+      arabic: "2",
+      roman: "II",
+      accidental: "",
+      defaultTonality: "minor"),
+  5: NumberStep(
+      semitone: 2, interval: "M2", arabic: "2", roman: "II", accidental: ""),
+  6: NumberStep(
+      semitone: 3, interval: "m3", arabic: "2", roman: "II", accidental: sharp),
+  7: NumberStep(
+      semitone: 4, interval: "m3", arabic: "3", roman: "III", accidental: flat),
+  8: NumberStep(
+      semitone: 4,
+      interval: "M3",
+      arabic: "3",
+      roman: "III",
+      accidental: "",
+      defaultTonality: "minor"),
+  9: NumberStep(
+    semitone: 4,
+    interval: "M3",
+    arabic: "3",
+    roman: "III",
+    accidental: "",
+  ),
+  10: NumberStep(
+      semitone: 5,
+      interval: "P4",
+      arabic: "4",
+      roman: "IV",
+      accidental: "",
+      defaultTonality: "major"),
+  11: NumberStep(
+      semitone: 5, interval: "P4", arabic: "4", roman: "IV", accidental: ""),
+  12: NumberStep(
+      semitone: 6, interval: "A4", arabic: "4", roman: "IV", accidental: sharp),
+  13: NumberStep(
+      semitone: 6, interval: "d5", arabic: "5", roman: "V", accidental: flat),
+  14: NumberStep(
+      semitone: 7,
+      interval: "P5",
+      arabic: "5",
+      roman: "V",
+      accidental: "",
+      defaultTonality: "major"),
+  15: NumberStep(
+    semitone: 7,
+    interval: "P5",
+    arabic: "5",
+    roman: "V",
+    accidental: "",
+  ),
+  16: NumberStep(
+      semitone: 8, interval: "m6", arabic: "5", roman: "V", accidental: sharp),
+  17: NumberStep(
+      semitone: 8, interval: "m6", arabic: "6", roman: "VI", accidental: flat),
+  18: NumberStep(
+      semitone: 9,
+      interval: "M6",
+      arabic: "6",
+      roman: "VI",
+      accidental: "",
+      defaultTonality: "minor"),
+  19: NumberStep(
+    semitone: 9,
+    interval: "M6",
+    arabic: "6",
+    roman: "VI",
+    accidental: "",
+  ),
+  20: NumberStep(
+      semitone: 10,
+      interval: "m7",
+      arabic: "6",
+      roman: "VI",
+      accidental: sharp),
+  21: NumberStep(
+      semitone: 10,
+      interval: "m7",
+      arabic: "7",
+      roman: "VII",
+      accidental: flat),
+  22: NumberStep(
+      semitone: 11,
+      interval: "M7",
+      arabic: "7",
+      roman: "VII",
+      accidental: "",
+      defaultTonality: "diminished"),
+  23: NumberStep(
+    semitone: 11,
+    interval: "M7",
+    arabic: "7",
+    roman: "VII",
+    accidental: "",
+  ),
 };
 
-
-Map<String,Set<int>> numberStepGroups = {
-  "basic": {0,10,14,18},
-  "diatonic":{0,4,8,10,14,18,22},
-  "all":{1,2,3,5,6,7,9,11,12, 13,15,16, 17,19,20,21,23},
+Map<String, Set<int>> numberStepGroups = {
+  "basic": {0, 10, 14, 18},
+  "diatonic": {0, 4, 8, 10, 14, 18, 22},
+  "diatonicPlus": {0, 3, 4, 7, 8, 10, 12, 13, 14, 17, 18, 21, 22},
+  "all": {1, 2, 3, 5, 6, 7, 9, 11, 12, 13, 15, 16, 17, 19, 20, 21, 23},
 };
 
+Map<String, String> tonality = {"major": "", "minor": "-", "diminished": "°"};
 
 class SettingsProviderNotifier extends StateNotifier<SettingsState> {
   SettingsProviderNotifier()
@@ -296,26 +377,26 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
     }
   }
 
-void guessNumber(String note, WidgetRef ref) {
+  void guessNumber(String note, WidgetRef ref) {
     Note n = Note.parse(note);
     if (state.guess > state.numberSteps.length) {
       return;
     }
 
-    if (state.chord!.items[state.guess] == n) {
+    if (n.isEnharmonicWith(state.scale!.degrees.first.transposeBy(
+        Interval.parse(
+            state.numberSteps.elementAt(state.guess).interval ?? "P1")))) {
       state = state.copyWith(
           guess: state.guess + 1,
           guesses: [...state.guesses, n],
           message: "$n is Correct");
-      if (state.guess == state.chord!.items.length) {
-        state = state.copyWith(message: "Chord Completed");
+      if (state.guess == state.numberSteps.length) {
+        state = state.copyWith(message: "Chart Completed");
       }
     } else {
       state = state.copyWith(message: "$n is incorrect");
     }
   }
-
-
 
   void guess(String note, WidgetRef ref) async {
     switch (state.guessType) {
@@ -346,16 +427,24 @@ void guessNumber(String note, WidgetRef ref) {
     nextNumber();
   }
 
-  nextNumber(){
+  nextNumber() {
     Random r = Random();
     state = state.copyWith(guess: 0, guesses: [], message: "");
     List<NumberStep> numberSteps = [];
-    for(int i = 0; i < state.numberCount; i++){
-      var listChoice = r.nextInt(numberStepGroups["diatonic"]!.length);
-      var stepList = numberStepGroups["diatonic"];
+    for (int i = 0; i < state.numberCount; i++) {
+      var listChoice = r.nextInt(numberStepGroups["diatonicPlus"]!.length);
+      var stepList = numberStepGroups["diatonicPlus"];
       numberSteps.add(numberStepsOptions[stepList?.elementAt(listChoice)]!);
+      if (numberSteps[i].defaultTonality == null) {
+        numberSteps[i] = numberSteps[i].copyWith(
+            defaultTonality:
+                tonality.keys.elementAt(r.nextInt(tonality.keys.length)));
+      }
     }
-    state = state.copyWith(numberSteps:numberSteps);
+    state = state.copyWith(numberSteps: numberSteps);
+
+    setScale(ScalePattern.major
+        .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
   }
 
   nextChord({bool major = true, bool minor = false}) {

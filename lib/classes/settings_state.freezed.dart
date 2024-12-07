@@ -329,7 +329,7 @@ class _$SettingsStateImpl implements _SettingsState {
       this.interval,
       this.key,
       this.startNote,
-      this.numberCount = 8,
+      this.numberCount = 16,
       final List<NumberStep> numberSteps = const <NumberStep>[],
       this.currentRun = 0,
       this.chordStreak = 0,
