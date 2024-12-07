@@ -17,6 +17,7 @@ dependencies:
   json_annotation: ^4.9.0
   material_symbols_icons: ^4.2800.2
   music_notes: ^0.19.1
+  responsive_grid: ^2.4.4
   riverpod: ^2.6.1
   shared_preferences: ^2.3.3
   url_launcher: ^6.3.1

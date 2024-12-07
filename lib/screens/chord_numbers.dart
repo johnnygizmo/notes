@@ -21,104 +21,113 @@ class _ChordNumbersState extends ConsumerState<ChordNumbers> {
   Widget build(BuildContext context) {
     var sp = ref.watch(settingsProvider);
     var r = Random();
+
+    var groupedNumbers = _chunk(sp.numberSteps, 4);
+
     return Scaffold(
       appBar: AppBar(
           title: const Text('Numbers Charts'),
           backgroundColor: Colors.deepOrange),
-      body: KeyboardListener(
-        autofocus: true,
-        focusNode: node,
-        onKeyEvent: (value) {
-          if (value.logicalKey == LogicalKeyboardKey.space) {
-            ref.read(settingsProvider.notifier).nextInterval();
-          }
-          String? guess = eventToGuess(value);
-          if (guess != null) {
-            ref.read(settingsProvider.notifier).guess(guess, ref);
-          }
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Chart is in the key of ${sp.scale?.degrees.first.toString()} major",
-                    style: TextStyle(fontSize: 26),
-                  )
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ...sp.numberSteps.asMap().entries.map<Widget>((entry) {
-                    int index = entry.key;
-                    var step = entry.value;
-                    List<Widget> widgets = [];
-
-                    // Add the step's text
-                    widgets.add(
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "${step.accidental}${step.arabic.toString()}${tonality[step.defaultTonality]}",
-                          style: const TextStyle(fontSize: 26),
+      body: SingleChildScrollView(
+        child: KeyboardListener(
+          autofocus: true,
+          focusNode: node,
+          onKeyEvent: (value) {
+            if (value.logicalKey == LogicalKeyboardKey.space) {
+              ref.read(settingsProvider.notifier).nextInterval();
+            }
+            String? guess = eventToGuess(value);
+            if (guess != null) {
+              ref.read(settingsProvider.notifier).guess(guess, ref);
+            }
+          },
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Chart is in the key of ${sp.scale?.degrees.first.toString()} major",
+                      style: TextStyle(fontSize: 26),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  width: 400,
+                  child: Center(
+                    child: GridView.builder(
+                        // primary: false,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio:
+                              2.5, // Adjust aspect ratio as needed
                         ),
-                      ),
-                    );
-
-                    if ((index + 1) % 4 == 0 &&
-                        index + 1 != sp.numberSteps.length) {
-                      widgets.add(const SizedBox(
-                        width: 50,
-                      ));
-                    }
-
-                    return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: widgets,
-                    );
-                  }),
-                  // Divider at the end
-                ],
-              ),
-              Text(sp.message, style: const TextStyle(fontSize: 24)),
-              sp.guesses.isEmpty
-                  ? const Text("Root Notes: [ ]")
-                  : Text("Root Notes: ${sp.guesses}"),
-              const SizedBox(
-                height: 25,
-              ),
-              sp.guess >= sp.numberSteps.length
-                  ? ElevatedButton(
-                      onPressed: () {
-                        ref.read(settingsProvider.notifier).nextInterval();
-                      },
-                      child: const Text("Next Chart"))
-                  : const ChromaticWidget(),
-              const SizedBox(
-                height: 25,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    ref.read(settingsProvider.notifier).nextNumber();
-                  },
-                  child: const Text('Skip')),
-              const SizedBox(
-                height: 25,
-              ),
-              Text(
-                  "The chord generator engine on this page is still in development"),
-              Text(
-                  "not all progressions will make musical sense or sound good."),
-            ],
+                        itemCount: groupedNumbers.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final group = groupedNumbers[index];
+                          return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: group
+                                  .map((g) => Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          "${g.accidental}${g.arabic.toString()}${tonality[g.defaultTonality]}",
+                                          style: const TextStyle(fontSize: 26),
+                                        ),
+                                      ))
+                                  .toList());
+                        }),
+                  ),
+                ),
+                Text(sp.message, style: const TextStyle(fontSize: 24)),
+                sp.guesses.isEmpty
+                    ? const Text("Root Notes: [ ]")
+                    : Text("Root Notes: ${sp.guesses}"),
+                const SizedBox(
+                  height: 25,
+                ),
+                sp.guess >= sp.numberSteps.length
+                    ? ElevatedButton(
+                        onPressed: () {
+                          ref.read(settingsProvider.notifier).nextInterval();
+                        },
+                        child: const Text("Next Chart"))
+                    : const ChromaticWidget(),
+                const SizedBox(
+                  height: 25,
+                ),
+                Text("Errors: ${sp.errors}"),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(settingsProvider.notifier).nextNumber();
+                    },
+                    child: const Text('Skip')),
+                const SizedBox(
+                  height: 25,
+                ),
+                Text(
+                    "The chord generator engine on this page is still in development"),
+                Text(
+                    "not all progressions will make musical sense or sound good."),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+}
+
+List<List<NumberStep>> _chunk(List<NumberStep> list, int size) {
+  List<List<NumberStep>> chunks = [];
+  for (var i = 0; i < list.length; i += size) {
+    chunks
+        .add(list.sublist(i, i + size > list.length ? list.length : i + size));
+  }
+  return chunks;
 }

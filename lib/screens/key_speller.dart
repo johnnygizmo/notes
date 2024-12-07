@@ -18,11 +18,11 @@ class KeySpeller extends ConsumerStatefulWidget {
 class _KeySpellerState extends ConsumerState<KeySpeller> {
   var node = FocusNode();
 
-  @override void initState() {  
+  @override
+  void initState() {
     ref.read(settingsProvider.notifier).initLists(ref);
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,9 @@ class _KeySpellerState extends ConsumerState<KeySpeller> {
                 SegmentedButton<TonalMode>(
                     multiSelectionEnabled: true,
                     onSelectionChanged: (p0) {
-                      ref.read(settingsProvider.notifier).updateSelectedKeys(p0,ref);
+                      ref
+                          .read(settingsProvider.notifier)
+                          .updateSelectedKeys(p0, ref);
                     },
                     segments: (keyOptions
                         .map(((TonalMode, String) key) =>
@@ -94,7 +96,6 @@ class _KeySpellerState extends ConsumerState<KeySpeller> {
                 Text('Spell Key Signature: ${sp.key?.note} ${sp.key?.mode} ',
                     style: const TextStyle(fontSize: 26)),
                 Text(sp.message, style: const TextStyle(fontSize: 24)),
-              
                 sp.guesses.isEmpty
                     ? const Text("Entries: [ ]")
                     : Text("Entries: ${sp.guesses}",
@@ -102,7 +103,6 @@ class _KeySpellerState extends ConsumerState<KeySpeller> {
                 const SizedBox(
                   height: 25,
                 ),
-             
                 if (sp.guess >= sp.key!.signature.notes.length)
                   ElevatedButton(
                       onPressed: () {
@@ -119,6 +119,7 @@ class _KeySpellerState extends ConsumerState<KeySpeller> {
                   ),
                   const KeyWidget()
                 ],
+                Text("Errors: ${sp.errors}"),
                 ElevatedButton(
                     onPressed: () {
                       ref.read(settingsProvider.notifier).nextKey();

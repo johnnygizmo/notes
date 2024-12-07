@@ -192,16 +192,17 @@ class _ScaleSpellerState extends ConsumerState<ScaleSpeller> {
                         },
                         child: const Text("Next Scale"))
                     : const ChromaticWidget(),
-                sp.currentRun <= 0
-                    ? Container()
-                    : Text("Current Streak ${sp.currentRun}"),
+                // sp.currentRun <= 0
+                //     ? Container()
+                //     : Text("Current Streak ${sp.currentRun}"),
                 const SizedBox(
                   height: 25,
                 ),
-                Text("Best Streak: $best"),
-                const SizedBox(
-                  height: 25,
-                ),
+                // Text("Best Streak: $best"),
+                // const SizedBox(
+                //   height: 25,
+                // ),
+                Text("Errors: ${sp.errors}"),
                 ElevatedButton(
                     onPressed: () {
                       ref.read(settingsProvider.notifier).nextScale();

@@ -29,6 +29,7 @@ mixin _$SettingsState {
   dynamic get intervalStreak => throw _privateConstructorUsedError;
   List<Note> get guesses => throw _privateConstructorUsedError;
   int get guess => throw _privateConstructorUsedError;
+  int get errors => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   GuessType get guessType => throw _privateConstructorUsedError;
   bool get scaleHelp => throw _privateConstructorUsedError;
@@ -63,6 +64,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       dynamic intervalStreak,
       List<Note> guesses,
       int guess,
+      int errors,
       String message,
       GuessType guessType,
       bool scaleHelp,
@@ -99,6 +101,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? intervalStreak = freezed,
     Object? guesses = null,
     Object? guess = null,
+    Object? errors = null,
     Object? message = null,
     Object? guessType = null,
     Object? scaleHelp = null,
@@ -159,6 +162,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.guess
           : guess // ignore: cast_nullable_to_non_nullable
               as int,
+      errors: null == errors
+          ? _value.errors
+          : errors // ignore: cast_nullable_to_non_nullable
+              as int,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -209,6 +216,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       dynamic intervalStreak,
       List<Note> guesses,
       int guess,
+      int errors,
       String message,
       GuessType guessType,
       bool scaleHelp,
@@ -243,6 +251,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? intervalStreak = freezed,
     Object? guesses = null,
     Object? guess = null,
+    Object? errors = null,
     Object? message = null,
     Object? guessType = null,
     Object? scaleHelp = null,
@@ -292,6 +301,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.guess
           : guess // ignore: cast_nullable_to_non_nullable
               as int,
+      errors: null == errors
+          ? _value.errors
+          : errors // ignore: cast_nullable_to_non_nullable
+              as int,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -337,6 +350,7 @@ class _$SettingsStateImpl implements _SettingsState {
       this.intervalStreak = 0,
       final List<Note> guesses = const <Note>[],
       this.guess = 0,
+      this.errors = 0,
       this.message = "",
       this.guessType = GuessType.scale,
       this.scaleHelp = false,
@@ -397,6 +411,9 @@ class _$SettingsStateImpl implements _SettingsState {
   final int guess;
   @override
   @JsonKey()
+  final int errors;
+  @override
+  @JsonKey()
   final String message;
   @override
   @JsonKey()
@@ -433,7 +450,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(scale: $scale, chord: $chord, interval: $interval, key: $key, startNote: $startNote, numberCount: $numberCount, numberSteps: $numberSteps, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, message: $message, guessType: $guessType, scaleHelp: $scaleHelp, selectedChords: $selectedChords, selectedScales: $selectedScales, selectedKeys: $selectedKeys)';
+    return 'SettingsState(scale: $scale, chord: $chord, interval: $interval, key: $key, startNote: $startNote, numberCount: $numberCount, numberSteps: $numberSteps, currentRun: $currentRun, chordStreak: $chordStreak, scaleStreak: $scaleStreak, intervalStreak: $intervalStreak, guesses: $guesses, guess: $guess, errors: $errors, message: $message, guessType: $guessType, scaleHelp: $scaleHelp, selectedChords: $selectedChords, selectedScales: $selectedScales, selectedKeys: $selectedKeys)';
   }
 
   @override
@@ -462,6 +479,7 @@ class _$SettingsStateImpl implements _SettingsState {
                 .equals(other.intervalStreak, intervalStreak) &&
             const DeepCollectionEquality().equals(other._guesses, _guesses) &&
             (identical(other.guess, guess) || other.guess == guess) &&
+            (identical(other.errors, errors) || other.errors == errors) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.guessType, guessType) ||
                 other.guessType == guessType) &&
@@ -491,6 +509,7 @@ class _$SettingsStateImpl implements _SettingsState {
         const DeepCollectionEquality().hash(intervalStreak),
         const DeepCollectionEquality().hash(_guesses),
         guess,
+        errors,
         message,
         guessType,
         scaleHelp,
@@ -523,6 +542,7 @@ abstract class _SettingsState implements SettingsState {
       final dynamic intervalStreak,
       final List<Note> guesses,
       final int guess,
+      final int errors,
       final String message,
       final GuessType guessType,
       final bool scaleHelp,
@@ -556,6 +576,8 @@ abstract class _SettingsState implements SettingsState {
   List<Note> get guesses;
   @override
   int get guess;
+  @override
+  int get errors;
   @override
   String get message;
   @override

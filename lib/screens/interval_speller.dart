@@ -57,15 +57,15 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                   const SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Text(
                     'Interval: ${intervals[sp.interval.toString()]} up from ${sp.startNote}',
                     style: const TextStyle(fontSize: 26)),
-        
+
                 Text(sp.message, style: const TextStyle(fontSize: 24)),
-        
+
                 sp.guesses.isEmpty
                     ? const Text("Entries: [ ]")
                     : Text("Entries: ${sp.guesses}"),
@@ -83,6 +83,7 @@ class _IntervalSpellerState extends ConsumerState<IntervalSpeller> {
                 const SizedBox(
                   height: 25,
                 ),
+                Text("Errors: ${sp.errors}"),
                 ElevatedButton(
                     onPressed: () {
                       ref.read(settingsProvider.notifier).nextInterval();

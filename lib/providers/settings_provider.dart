@@ -292,7 +292,7 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
                 "$num ${acc == "s" ? num == 1 ? "sharp" : "sharps" : num == 1 ? "flat" : "flats"} is Correct");
       }
     } else {
-      state = state.copyWith(message: "Try Again");
+      state = state.copyWith(message: "Try Again", errors: state.errors + 1);
     }
   }
 
@@ -311,7 +311,8 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
             message: "Key Completed", currentRun: state.currentRun + 1);
       }
     } else {
-      state = state.copyWith(message: "$n is incorrect", currentRun: -1);
+      state = state.copyWith(
+          message: "$n is incorrect", currentRun: -1, errors: state.errors + 1);
     }
   }
 
@@ -324,7 +325,7 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
     if (n.isEnharmonicWith(state.startNote!.transposeBy(state.interval!))) {
       state = state.copyWith(message: "Correct", guesses: [n], guess: 1);
     } else {
-      state = state.copyWith(message: "Incorrect");
+      state = state.copyWith(message: "Incorrect", errors: state.errors + 1);
     }
   }
 
@@ -354,7 +355,8 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
         });
       }
     } else {
-      state = state.copyWith(message: "$n is incorrect", currentRun: -1);
+      state = state.copyWith(
+          message: "$n is incorrect", currentRun: -1, errors: state.errors + 1);
     }
   }
 
@@ -373,7 +375,8 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
         state = state.copyWith(message: "Chord Completed");
       }
     } else {
-      state = state.copyWith(message: "$n is incorrect");
+      state =
+          state.copyWith(message: "$n is incorrect", errors: state.errors + 1);
     }
   }
 
@@ -394,7 +397,8 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
         state = state.copyWith(message: "Chart Completed");
       }
     } else {
-      state = state.copyWith(message: "$n is incorrect");
+      state =
+          state.copyWith(message: "$n is incorrect", errors: state.errors + 1);
     }
   }
 
@@ -419,7 +423,8 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
   }
 
   reset(GuessType type) {
-    state = state.copyWith(guess: 0, guesses: [], message: "", guessType: type);
+    state = state.copyWith(
+        guess: 0, guesses: [], message: "", guessType: type, errors: 0);
     nextChord();
     nextScale();
     nextInterval();
@@ -432,8 +437,8 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
     state = state.copyWith(guess: 0, guesses: [], message: "");
     List<NumberStep> numberSteps = [];
     for (int i = 0; i < state.numberCount; i++) {
-      var listChoice = r.nextInt(numberStepGroups["diatonicPlus"]!.length);
-      var stepList = numberStepGroups["diatonicPlus"];
+      var listChoice = r.nextInt(numberStepGroups["diatonic"]!.length);
+      var stepList = numberStepGroups["diatonic"];
       numberSteps.add(numberStepsOptions[stepList?.elementAt(listChoice)]!);
       if (numberSteps[i].defaultTonality == null) {
         numberSteps[i] = numberSteps[i].copyWith(
@@ -441,7 +446,7 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
                 tonality.keys.elementAt(r.nextInt(tonality.keys.length)));
       }
     }
-    state = state.copyWith(numberSteps: numberSteps);
+    state = state.copyWith(numberSteps: numberSteps, errors: 0);
 
     setScale(ScalePattern.major
         .on(Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)))));
@@ -449,7 +454,7 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
 
   nextChord({bool major = true, bool minor = false}) {
     Random r = Random();
-    state = state.copyWith(guess: 0, guesses: [], message: "");
+    state = state.copyWith(guess: 0, guesses: [], message: "", errors: 0);
     if (state.selectedChords.isEmpty) {
       state = state.copyWith(selectedChords: {ChordPattern.majorTriad});
     }
@@ -462,7 +467,7 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
 
   nextInterval() {
     Random r = Random();
-    state = state.copyWith(guess: 0, guesses: [], message: "");
+    state = state.copyWith(guess: 0, guesses: [], message: "", errors: 0);
     Note start = Note.c.transposeBy(Interval.fromSemitones(r.nextInt(12)));
     Interval i = Interval.fromSemitones(r.nextInt(12));
     setInterval(i, start);
@@ -470,7 +475,7 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
 
   nextScale({bool major = true, bool minor = false}) {
     Random r = Random();
-    state = state.copyWith(guess: 0, guesses: [], message: "");
+    state = state.copyWith(guess: 0, guesses: [], message: "", errors: 0);
 
     if (state.selectedScales.isEmpty) {
       state = state.copyWith(selectedScales: {ScalePattern.major});
@@ -485,7 +490,7 @@ class SettingsProviderNotifier extends StateNotifier<SettingsState> {
 
   nextKey() {
     Random r = Random();
-    state = state.copyWith(guess: 0, guesses: [], message: "");
+    state = state.copyWith(guess: 0, guesses: [], message: "", errors: 0);
 
     if (state.selectedKeys.isEmpty) {
       state = state.copyWith(selectedKeys: {TonalMode.major});

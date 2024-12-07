@@ -16,11 +16,11 @@ class ChordSpeller extends ConsumerStatefulWidget {
 class _ChordSpellerState extends ConsumerState<ChordSpeller> {
   var node = FocusNode();
 
-  @override void initState() {
+  @override
+  void initState() {
     ref.read(settingsProvider.notifier).initLists(ref);
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,6 @@ class _ChordSpellerState extends ConsumerState<ChordSpeller> {
         backgroundColor: Colors.deepOrange,
       ),
       body: SingleChildScrollView(
-        
         child: KeyboardListener(
           autofocus: true,
           focusNode: node,
@@ -55,7 +54,9 @@ class _ChordSpellerState extends ConsumerState<ChordSpeller> {
                 SegmentedButton<ChordPattern>(
                     multiSelectionEnabled: true,
                     onSelectionChanged: (p0) {
-                      ref.read(settingsProvider.notifier).updateSelectedChords(p0,ref);
+                      ref
+                          .read(settingsProvider.notifier)
+                          .updateSelectedChords(p0, ref);
                     },
                     segments: (chordOptions
                         .map(((ChordPattern, String) chord) =>
@@ -92,6 +93,7 @@ class _ChordSpellerState extends ConsumerState<ChordSpeller> {
                 const SizedBox(
                   height: 25,
                 ),
+                Text("Errors: ${sp.errors}"),
                 ElevatedButton(
                     onPressed: () {
                       ref.read(settingsProvider.notifier).nextChord();

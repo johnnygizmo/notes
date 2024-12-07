@@ -21,6 +21,7 @@ class SettingsState with _$SettingsState {
     @Default(0) intervalStreak,
     @Default(<Note>[]) List<Note> guesses,
     @Default(0) int guess,
+    @Default(0) int errors,
     @Default("") String message,
     @Default(GuessType.scale) GuessType guessType,
     @Default(false) bool scaleHelp,
